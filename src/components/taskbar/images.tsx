@@ -1,0 +1,10 @@
+import VSCode from '../../assets/vscode.png'
+import Chrome from '../../assets/chrome.png'
+import Calculator from '../../assets/calculator.png'
+import FileManager from '../../assets/file.png'
+import CogWheel from '../../assets/wheel.png'
+import Youtube from '../../assets/youtube.png'
+import Spotify from '../../assets/spotity.png'
+import Terminal from '../../assets/terminal.png'
+import Trash from '../../assets/trash-can.png'
+export { VSCode, Chrome, Calculator, FileManager, CogWheel, Spotify, Youtube, Terminal, Trash }
