@@ -52,11 +52,9 @@ function Start({ isOpened, onToggle }: StartProps) {
       setItems(taskbarItems);
     }
   }, [debouncedSearchTerm]);
-
-  const renderTaskbarItem = (el: typeof taskbarItems[0]) => <TaskbarItem key={el.id} image={el.image} title={el.title} />;
-
+  const renderTaskbarItem = (el: typeof taskbarItems[0]) => <TaskbarItem key={el.id} image={el.image} title={el.title} />
   return (
-    <div className={cn("text-primary-accent bg-dark-highlight w-[410px] overflow-auto absolute z-50 left-[50px] h-[460px] rounded-lg top-[10px]", isOpened ? "block" : "hidden")}>
+    <div className={cn("text-primary-accent shadow-2xl shadow-stone-900 bg-dark-highlight w-[410px] overflow-auto absolute left-[50px] h-[460px] rounded-lg top-[10px]", isOpened ? "block" : "hidden")}>
       <div className="grid grid-cols-12 ">
         <div className="col-span-7 h-[380px] pb-2  m-3 bg-dark-base flex-col flex">
           {items.map(renderTaskbarItem)}
