@@ -1,27 +1,45 @@
-import React, { ReactNode } from 'react'
+import React, { CSSProperties, ReactNode } from 'react'
 import CloseButton from './close-button'
 import ExpandButton from './expand-button'
 import MenuButton from './menu-button'
 import MinimiseButton from './minimise-button'
-import UrlBar from './url-bar'
-import Chrome from '../apps/chrome'
+import { cn } from '../../lib/utils'
 // 412B22
 // 32211A
-interface Props { children: ReactNode }
-function Window({ children }: Props) {
+interface Props extends CSSProperties {
+  children: ReactNode,
+  width?: number,
+  height?: number,
+  className?: string,
+  xOffset?: number,
+  yOffset?: number,
+  title?: string
+}
+function Window({ children,
+  width = 795, height = 560,
+  className,
+  xOffset = 60,
+  yOffset = 20,
+  zIndex = 40,
+  title
+}: Props) {
+  const styles = {
+    width: `${width}px`,
+    height: `${height}px`,
+    top: `${yOffset}px`,
+    left: `${xOffset}px`,
+    zIndex: zIndex
+  }
   return (
-    <div className='w-[795px] h-[560px] rounded-2xl left-[60px]  bg-dark-highlight z-40 absolute top-5 text-primary-accent'>
+    <div style={styles} className={cn(' border border-stone-700  rounded-2xl  bg-dark-highlight  absolute text-primary-accent', className)}>
       <div className="flex justify-between items-center ml-2">
-        <div className="cursor-move"></div>
+        <div className="cursor-move text-center flex-1 font-medium">{title}</div>
         <div className=" m-2 flex gap-2 items-center mr-3 justify-end">
           <MenuButton />
           <MinimiseButton />
           <ExpandButton />
           <CloseButton />
         </div>
-      </div>
-      <div className="bg-dark-base">
-        <UrlBar />
       </div>
       {children}
     </div>
