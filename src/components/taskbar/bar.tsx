@@ -1,17 +1,25 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { cn } from '../../lib/utils'
 import { BarProps } from '../../interfaces/taskbar'
 import { BiSolidGrid } from "react-icons/bi";
 import Start from './start';
 import { useDisclosure } from '../../hooks/useDisclosure';
+import { WindowContext } from '../../context/window-context';
+import TabItem from '../home/tab-item';
 function Bar({ className }: BarProps) {
   const { isOpen, onToggle, } = useDisclosure()
-
+  const appContext = useContext(WindowContext)
   return (
     <div className={cn('bg-dark-base glass relative', className)}>
       <div className="mt-2 flex flex-col items-center">
         <div role='button' onClick={() => onToggle()} className="">
-          <BiSolidGrid className='text-white pr-1' size={30} />
+          <BiSolidGrid className='text-white ' size={30} />
+          <div className="flex flex-col gap-4 mt-4">
+            {appContext?.windowConfig?.map((el) => (
+              <TabItem image={el.icon!} />
+
+            ))}
+          </div>
         </div>
       </div>
       <Start isOpened={isOpen} onToggle={onToggle} />

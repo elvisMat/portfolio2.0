@@ -8,8 +8,12 @@ import {
 // Supports weights 200-900
 import '@fontsource-variable/nunito';
 import router from './utils/router.tsx';
+import App from './app.tsx';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <App>
+      <RouterProvider router={router} />
+    </App>
   </StrictMode>,
 )
