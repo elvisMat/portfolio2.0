@@ -6,7 +6,7 @@ export const AppConfig: IWindow[] = [
     title: "Chrome",
     xOffset: 60,
     yOffset: 20,
-    zIndex: 39,
+    zIndex: 41,
     children: <Chrome displayUrl="www.google.com" url={"https://www.google.com/webhp?igu=1"} />,
     isActive: true,
     icon: ChromeIcon

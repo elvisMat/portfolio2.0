@@ -14,12 +14,11 @@ function Bar({ className }: BarProps) {
       <div className="mt-2 flex flex-col items-center">
         <div role='button' onClick={() => onToggle()} className="">
           <BiSolidGrid className='text-white ' size={30} />
-          <div className="flex flex-col gap-4 mt-4">
-            {appContext?.windowConfig?.map((el) => (
-              <TabItem image={el.icon!} />
-
-            ))}
-          </div>
+        </div>
+        <div className="flex flex-col gap-4 mt-4">
+          {appContext?.windowConfig?.map((el) => (
+            <TabItem isActive={el.isActive!} image={el.icon!} />
+          ))}
         </div>
       </div>
       <Start isOpened={isOpen} onToggle={onToggle} />
