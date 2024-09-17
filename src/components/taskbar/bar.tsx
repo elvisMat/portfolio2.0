@@ -17,7 +17,7 @@ function Bar({ className }: BarProps) {
         </div>
         <div className="flex flex-col gap-4 mt-4">
           {appContext?.windowConfig?.map((el) => (
-            <TabItem isActive={el.isActive!} image={el.icon!} />
+            <TabItem title={el.title!} isActive={el.isActive!} image={el.icon!} />
           ))}
         </div>
       </div>

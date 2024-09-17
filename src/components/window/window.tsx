@@ -72,6 +72,7 @@ function Window({ children,
         if (app.title === title) {
           app.width = 0
           app.height = 0
+          app.isActive = false
           app.opacity = 0
           return app
         }
