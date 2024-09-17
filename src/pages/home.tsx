@@ -3,9 +3,9 @@ import Bar from '../components/taskbar/bar'
 import bg from '../assets/bg.jpeg'
 import Desktop from '../components/home/home'
 import Window from '../components/window/window'
-import { CurrentWindowContext } from '../context/current-window-context'
+import { WindowContext } from '../context/window-context'
 function Home() {
-  const appContext = useContext(CurrentWindowContext)
+  const appContext = useContext(WindowContext)
   console.log(appContext?.windowConfig)
   return (
     <div className='w-[100vw] h-[100vh] bg-dark-base relative'>

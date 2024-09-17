@@ -2,23 +2,19 @@ import React, { useContext } from 'react'
 
 import { cn } from '../../lib/utils'
 import { useIsHovered } from '../../hooks/useIsHovered'
-import { CurrentWindowContext, } from '../../context/current-window-context'
-import { WindowContext } from '../../context/default-window-context'
-import { AppConfig } from '../../app-config'
-function TabItem({ image, isActive, title }: { image: string, isActive: boolean, title: string }) {
+import { WindowContext } from '../../context/window-context'
+function TabItem({ image, isActive }: { image: string, isActive: boolean }) {
   const { _onMouseEnter, _onMouseLeave, hovered } = useIsHovered()
-  const appContext = useContext(CurrentWindowContext)
-  const defaultContext = useContext(WindowContext)
+  const appContext = useContext(WindowContext)
+
   const _onClick = () => {
     if (isActive) {
       return
     }
     else {
-      let app = defaultContext?.windowConfig?.find((el) => el.title === title)
-      console.log(app)
       appContext?.setWindowConfig?.(appContext?.windowConfig?.map((el) => {
-        if (el.title === title) {
-          return { ...el, isActive: true, zIndex: 41, width: app?.width, height: app?.height, opacity: 1 }
+        if (el.icon === image) {
+          return { ...el, isActive: true, zIndex: 41 }
         }
         return { ...el, isActive: false, zIndex: 40 }
       }))
