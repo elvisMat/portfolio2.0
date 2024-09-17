@@ -4,7 +4,7 @@ import ExpandButton from './expand-button'
 import MenuButton from './menu-button'
 import MinimiseButton from './minimise-button'
 import { cn } from '../../lib/utils'
-import { IWindow, WindowContext } from '../../context/window-context'
+import { IWindow, CurrentWindowContext } from '../../context/current-window-context'
 // 412B22
 // 32211A
 function Window({ children,
@@ -26,7 +26,7 @@ function Window({ children,
 
   const [isDragging, setIsDragging] = React.useState(false)
   const moveOffset = React.useRef({ x: 0.1, y: 0.1 })
-  const appContext = React.useContext(WindowContext)
+  const appContext = React.useContext(CurrentWindowContext)
 
   function _onMouseDown(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.preventDefault()
@@ -73,6 +73,7 @@ function Window({ children,
           app.width = 0
           app.height = 0
           app.opacity = 0
+          app.isActive = false
           return app
         }
         return app

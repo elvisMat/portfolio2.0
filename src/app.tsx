@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext, useEffect, useState } from 'react'
-import { IWindowContext, WindowContext, IWindow } from './context/window-context'
+import { IWindowContext, CurrentWindowContext, IWindow } from './context/current-window-context'
 import { AppConfig } from './app-config'
 
 function App({ children }: { children?: ReactNode }) {
@@ -19,9 +19,9 @@ function App({ children }: { children?: ReactNode }) {
     // }
   }, [])
   return (
-    <WindowContext.Provider value={{ windowConfig, setWindowConfig }}>
+    <CurrentWindowContext.Provider value={{ windowConfig, setWindowConfig }}>
       {children}
-    </WindowContext.Provider>
+    </CurrentWindowContext.Provider>
   )
 }
 

@@ -1,4 +1,4 @@
-import { IWindow } from "./context/window-context";
+import { IWindow } from "./context/default-window-context";
 import Chrome from "./components/apps/chrome";
 import { Calculator, Chrome as ChromeIcon } from "./components/taskbar/images";
 export const AppConfig: IWindow[] = [
