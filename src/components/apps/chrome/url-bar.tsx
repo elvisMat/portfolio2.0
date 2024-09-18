@@ -2,11 +2,11 @@ import React from 'react'
 import { BiHome, BiRefresh } from 'react-icons/bi'
 import { Input } from '../../ui/input'
 
-function UrlBar({ displayUrl = 'https://wwww.google.com' }: { displayUrl?: string }) {
+function UrlBar({ displayUrl = 'https://wwww.google.com', onClick }: { displayUrl?: string, onClick: () => void }) {
   return (
     <div className="grid grid-cols-12 items-center p-2">
       <div className="col-span-1 flex justify-center gap-3">
-        <BiRefresh size={23} />
+        <BiRefresh onClick={() => onClick()} size={23} />
         <BiHome size={20} />
       </div>
       <div className="col-span-10 ml-6">
