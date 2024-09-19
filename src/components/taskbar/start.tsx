@@ -14,7 +14,7 @@ import useDebounce from '../../hooks/useDebouncedValue';
 const taskbarItems = [
   { id: 1, image: Calculator, title: 'Calculator' },
   { id: 2, image: FileManager, title: 'About Rapelang' },
-  { id: 3, image: Chrome, title: 'Google Chrome' },
+  { id: 3, image: Chrome, title: 'Chrome' },
   { id: 4, image: VSCode, title: 'Visual studio code' },
   { id: 5, image: Youtube, title: 'Youtube' },
   { id: 6, image: Spotify, title: 'Spotify' },

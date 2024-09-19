@@ -66,6 +66,14 @@ function Window({ children,
     console.log('mouse move', x, y)
   }
 
+  function _onClose() {
+    let newConfig = appContext?.windowConfig.filter((app) => {
+      return app.title !== title
+    })
+    if (newConfig && newConfig.length > 0) {
+      appContext?.setWindowConfig(newConfig)
+    }
+  }
   function _onMinimise() {
     appContext?.setWindowConfig(() => {
       const newConfig = appContext?.windowConfig.map((app) => {
@@ -89,7 +97,7 @@ function Window({ children,
           <MenuButton />
           <MinimiseButton onClick={_onMinimise} />
           <ExpandButton />
-          <CloseButton />
+          <CloseButton onClick={_onClose} />
         </div>
       </div>
       {children}
