@@ -9,5 +9,7 @@ export interface ItemProps {
   title: string;
   image: string;
 }
-export interface TaskbarItemProps extends ItemProps {}
+export interface TaskbarItemProps extends ItemProps {
+  onToggle: () => void;
+}
 export interface HomeItemProps extends ItemProps {}

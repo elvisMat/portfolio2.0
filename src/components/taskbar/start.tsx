@@ -43,16 +43,13 @@ function Start({ isOpened, onToggle }: StartProps) {
       setItems(taskbarItems.filter((el) =>
         el.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       ));
-      console.log('Search term:', debouncedSearchTerm);
-      console.log(taskbarItems.filter((el) =>
-        el.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-      ));
+
     } else {
       // If no search term, show all items
       setItems(taskbarItems);
     }
   }, [debouncedSearchTerm]);
-  const renderTaskbarItem = (el: typeof taskbarItems[0]) => <TaskbarItem key={el.id} image={el.image} title={el.title} />
+  const renderTaskbarItem = (el: typeof taskbarItems[0]) => <TaskbarItem onToggle={onToggle} key={el.id} image={el.image} title={el.title} />
   return (
     <div className={cn("text-primary-accent shadow-2xl shadow-stone-900 bg-dark-highlight w-[410px] overflow-auto absolute left-[50px] h-[460px] rounded-lg top-[10px]", isOpened ? "block" : "hidden")}>
       <div className="grid grid-cols-12 ">

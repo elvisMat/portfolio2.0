@@ -1,15 +1,15 @@
 import React from 'react'
 import { TaskbarItemProps } from '../../interfaces/taskbar'
-import { WindowContext } from '../../context/window-context'
+import { IWindow, WindowContext } from '../../context/window-context'
 import { AppConfig } from '../../app-config'
 
-function TaskbarItem({ image, title }: TaskbarItemProps) {
+function TaskbarItem({ image, title, onToggle }: TaskbarItemProps) {
   const appContext = React.useContext(WindowContext)
 
   function _onLaunch() {
     let newAppConfig = appContext?.windowConfig
-    const app = AppConfig.find((app) => app.title === title)
-    console.log(app)
+    let app = AppConfig.find((app) => app.title === title)
+
     if (newAppConfig) {
       const activeAppIndex = newAppConfig.findIndex((app) => app.title === title)
       if (activeAppIndex != -1) {
@@ -23,11 +23,15 @@ function TaskbarItem({ image, title }: TaskbarItemProps) {
       }
       else {
         if (app) {
-          newAppConfig.push(app)
-
-          appContext?.setWindowConfig(newAppConfig)
+          app = { ...app, isActive: true, zIndex: 41 }
+          let inactiveApps: IWindow[] = newAppConfig.map((el) => {
+            return { ...el, isActive: false, zIndex: 40 }
+          })
+          inactiveApps.push(app)
+          appContext?.setWindowConfig(inactiveApps)
         }
       }
+      onToggle()
     }
   }
   return (
