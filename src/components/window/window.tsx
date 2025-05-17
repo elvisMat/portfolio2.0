@@ -5,6 +5,7 @@ import MenuButton from "./menu-button";
 import MinimiseButton from "./minimise-button";
 import { cn } from "../../lib/utils";
 import { IWindow, WindowContext } from "../../context/window-context";
+import { AppConfig } from "../../app-config";
 // 412B22
 // 32211A
 function Window({
@@ -77,10 +78,15 @@ function Window({
       //on close, make last app active
       if (newConfig.length > 0) {
         const lastApp = newConfig[newConfig.length - 1];
-        lastApp.isActive = true;
-        lastApp.opacity = 1;
-        lastApp.zIndex = 41;
-        newConfig[newConfig.length - 1] = lastApp;
+        const newAppConfig = AppConfig.find((app) => {
+          return app.title === lastApp.title;
+        });
+        newAppConfig!.isActive = true;
+        newAppConfig!.zIndex = 41;
+        newAppConfig!.opacity = 1;
+        // newAppConfig!.width ;
+        newConfig[newConfig.length - 1] = newAppConfig!;
+        console.log("new app config", newAppConfig);
       }
       appContext?.setWindowConfig(newConfig);
     }

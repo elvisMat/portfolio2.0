@@ -7,10 +7,12 @@ import {
 import { AppConfig } from "./app-config";
 
 function App({ children }: { children?: ReactNode }) {
-  const [windowConfig, setWindowConfig] = useState<IWindow[]>([]);
+  const [windowConfig, setWindowConfig] = useState<IWindow[]>(
+    AppConfig.filter((app) => app.title === "About Rapelang")
+  );
 
   useEffect(() => {
-    setWindowConfig(AppConfig.filter((app) => app.isOpenByDefault));
+    // setWindowConfig(AppConfig.filter((app) => app.isOpenByDefault));
     // PRE_PROCUCTION: Uncomment the code below to persist window configuration
     // const data = localStorage.getItem('window-config')
     // if (!data) {
