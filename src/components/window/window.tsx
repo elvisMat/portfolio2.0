@@ -5,7 +5,6 @@ import MenuButton from "./menu-button";
 import MinimiseButton from "./minimise-button";
 import { cn } from "../../lib/utils";
 import { IWindow, WindowContext } from "../../context/window-context";
-import { AppConfig } from "../../app-config";
 // 412B22
 // 32211A
 function Window({
@@ -74,21 +73,26 @@ function Window({
       return app.title !== title;
     });
 
-    if (newConfig) {
-      //on close, make last app active
-      if (newConfig.length > 0) {
-        const lastApp = newConfig[newConfig.length - 1];
-        const newAppConfig = AppConfig.find((app) => {
-          return app.title === lastApp.title;
-        });
-        newAppConfig!.isActive = true;
-        newAppConfig!.zIndex = 41;
-        newAppConfig!.opacity = 1;
+    //on close, make last app active
+    if (newConfig && newConfig?.length > 0) {
+      const lastApp = newConfig.at(-1);
+      const newAppConfig = appContext?.allWindowConfig.find((app) => {
+        return app.title === lastApp!.title;
+      });
+      if (newAppConfig) {
+        const newApp = {
+          ...newAppConfig!,
+          isActive: true,
+          zIndex: 41,
+          opacity: 1,
+        };
+
         // newAppConfig!.width ;
-        newConfig[newConfig.length - 1] = newAppConfig!;
-        console.log("new app config", newAppConfig);
+        newConfig[newConfig.length - 1] = newApp;
+        console.log(newAppConfig);
+        console.log(newApp);
+        appContext?.setWindowConfig(newConfig);
       }
-      appContext?.setWindowConfig(newConfig);
     }
   }
   function _onMinimise() {

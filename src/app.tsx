@@ -1,4 +1,10 @@
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   IWindowContext,
   WindowContext,
@@ -8,8 +14,10 @@ import { AppConfig } from "./app-config";
 
 function App({ children }: { children?: ReactNode }) {
   const [windowConfig, setWindowConfig] = useState<IWindow[]>(
-    AppConfig.filter((app) => app.title === "About Rapelang")
+    []
+    // AppConfig.filter((app) => app.title === "About Rapelang")
   );
+  const allWindowConfig = useMemo(() => AppConfig, []);
 
   useEffect(() => {
     // setWindowConfig(AppConfig.filter((app) => app.isOpenByDefault));
@@ -23,8 +31,11 @@ function App({ children }: { children?: ReactNode }) {
     //   setWindowConfig(JSON.parse(data))
     // }
   }, []);
+
   return (
-    <WindowContext.Provider value={{ windowConfig, setWindowConfig }}>
+    <WindowContext.Provider
+      value={{ windowConfig, setWindowConfig, allWindowConfig }}
+    >
       {children}
     </WindowContext.Provider>
   );

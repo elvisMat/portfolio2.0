@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { cn } from "../../lib/utils";
 import { useIsHovered } from "../../hooks/useIsHovered";
 import { WindowContext } from "../../context/window-context";
-import { AppConfig } from "../../app-config";
 function TabItem({
   image,
   isActive,
@@ -20,12 +19,12 @@ function TabItem({
     if (isActive) {
       return;
     } else {
-      let app = AppConfig.find((el) => el.title === title);
+      let app = appContext?.allWindowConfig.find((el) => el.title === title);
+      console.log(app);
       appContext?.setWindowConfig?.(
         appContext?.windowConfig?.map((el) => {
           if (el.title === title) {
             console.log(app);
-
             return {
               ...el,
               isActive: true,
@@ -35,7 +34,7 @@ function TabItem({
               opacity: 1,
             };
           }
-          return { ...el, isActive: false, zIndex: 40 };
+          return { ...el };
         })
       );
     }
@@ -57,7 +56,7 @@ function TabItem({
       <img
         src={image}
         className={cn("w-[23px]", hovered ? "opacity-80" : "opacity-100")}
-        alt="Chrome icon"
+        alt={title + " Image"}
       />
     </div>
   );

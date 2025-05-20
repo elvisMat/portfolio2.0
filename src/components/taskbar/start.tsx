@@ -12,6 +12,7 @@ import {
   Terminal,
   Youtube,
   Trash,
+  CogWheel,
 } from "./images";
 import { Input } from "../ui/IconInput";
 import useDebounce from "../../hooks/useDebouncedValue";
@@ -25,7 +26,7 @@ const taskbarItems = [
   { id: 5, image: Youtube, title: "Youtube" },
   { id: 6, image: Spotify, title: "Spotify" },
   { id: 7, image: Terminal, title: "Terminal" },
-  // { id: 8, image: CogWheel, title: 'Settings' },
+  { id: 8, image: CogWheel, title: "Settings" },
   { id: 9, image: Trash, title: "Trash" },
 ];
 

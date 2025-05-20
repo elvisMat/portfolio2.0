@@ -1,24 +1,39 @@
-import { FileChartColumn, UserIcon, WorkflowIcon } from "lucide-react";
+import {
+  BookCopy,
+  FileChartColumn,
+  Gamepad2Icon,
+  UserIcon,
+  WorkflowIcon,
+} from "lucide-react";
 import NavLink from "./about-me/nav-link";
 import MainSection from "./about-me/main-section";
 import React from "react";
+import Resume from "./about-me/resume";
+import ExperienceSection from "./about-me/experience";
+import EducationSection from "./about-me/education";
 
 export default function AboutMe() {
   const [section, setSection] = React.useState<
-    "main" | "resume" | "experience"
+    "main" | "resume" | "experience" | "education" | "projects" | "skills"
   >("main");
 
   const getSections = React.useMemo(() => {
     switch (section) {
       case "main":
         return <MainSection />;
+      case "resume":
+        return <Resume />;
+      case "experience":
+        return <ExperienceSection />;
+      case "education":
+        return <EducationSection />;
       default:
         return null;
     }
   }, [section]);
   return (
     <div className=" bg-dark-base text-white flex">
-      <aside className="w-64 bg p-2 space-y-2 border-r-2  border-dark-highlight">
+      <aside className="min-w-64 bg p-2 space-y-2 border-r-2  border-dark-highlight">
         <nav className=" text-sm space-y-1">
           <NavLink
             onClick={() => setSection("main")}
@@ -38,13 +53,19 @@ export default function AboutMe() {
             icon={<WorkflowIcon size={"18"} />}
             title="Experience"
           />
+          <NavLink
+            isActive={section === "education"}
+            onClick={() => setSection("education")}
+            icon={<BookCopy size={"18"} />}
+            title="Education"
+          />
 
-          <div className="flex items-center gap-2 text-white pl-1">
-            Experience
-          </div>
-          <div className="flex items-center gap-2 text-white">📖 Education</div>
-          <div className="flex items-center gap-2 text-white">🛠 Skills</div>
-          <div className="flex items-center gap-2 text-white">📱 Projects</div>
+          <NavLink
+            isActive={section === "projects"}
+            onClick={() => setSection("projects")}
+            icon={<Gamepad2Icon size={"18"} />}
+            title="Projects"
+          />
         </nav>
       </aside>
 

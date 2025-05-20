@@ -39,10 +39,9 @@ export const AppConfig: IWindow[] = [
     xOffset: 70,
     zIndex: 40,
     width: 1000,
-    height: 435,
+    height: 635,
     children: <AboutMe />,
     isActive: false,
     icon: FileManagerIcon,
-    isOpenByDefault: true,
   },
 ];

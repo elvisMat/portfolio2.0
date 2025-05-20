@@ -14,5 +14,6 @@ export interface IWindow extends CSSProperties {
 export interface IWindowContext {
   windowConfig: IWindow[];
   setWindowConfig: (config: IWindow[] | (() => IWindow[])) => void;
+  allWindowConfig: IWindow[];
 }
 export const WindowContext = createContext<IWindowContext | null>(null);

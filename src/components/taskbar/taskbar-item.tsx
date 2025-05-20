@@ -1,15 +1,13 @@
 import React from "react";
 import { TaskbarItemProps } from "../../interfaces/taskbar";
 import { IWindow, WindowContext } from "../../context/window-context";
-import { AppConfig } from "../../app-config";
 
 function TaskbarItem({ image, title, onToggle }: TaskbarItemProps) {
   const appContext = React.useContext(WindowContext);
 
   function _onLaunch() {
     let newAppConfig = appContext?.windowConfig;
-    let app = AppConfig.find((app) => app.title === title);
-
+    let app = appContext?.allWindowConfig.find((app) => app.title === title);
     if (newAppConfig) {
       const activeAppIndex = newAppConfig.findIndex(
         (app) => app.title === title

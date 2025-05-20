@@ -1,0 +1,30 @@
+import React from "react";
+
+const PdfViewer = () => {
+  return (
+    <div className="h-full w-full m-0 p-3">
+      <h1 className=" text-center text-3xl py-2 font-bold">Resume</h1>
+
+      <object
+        className="w-full aspect-[4/3] h-full"
+        data="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
+        type="application/pdf"
+        width="800"
+        height="500"
+      >
+        <p>
+          Your browser does not support PDFs.{" "}
+          <a
+            href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
+            className="text-blue-600 underline"
+          >
+            Download the PDF
+          </a>
+          .
+        </p>
+      </object>
+    </div>
+  );
+};
+
+export default PdfViewer;
