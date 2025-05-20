@@ -72,28 +72,9 @@ function Window({
     let newConfig = appContext?.windowConfig.filter((app) => {
       return app.title !== title;
     });
-
-    //on close, make last app active
-    if (newConfig && newConfig?.length > 0) {
-      const lastApp = newConfig.at(-1);
-      const newAppConfig = appContext?.allWindowConfig.find((app) => {
-        return app.title === lastApp!.title;
-      });
-      if (newAppConfig) {
-        const newApp = {
-          ...newAppConfig!,
-          isActive: true,
-          zIndex: 41,
-          opacity: 1,
-        };
-
-        // newAppConfig!.width ;
-        newConfig[newConfig.length - 1] = newApp;
-        console.log(newAppConfig);
-        console.log(newApp);
-        appContext?.setWindowConfig(newConfig);
-      }
-    }
+    if (newConfig && newConfig.length > 0)
+      appContext?.setWindowConfig(newConfig);
+    appContext?.setWindowConfig([]);
   }
   function _onMinimise() {
     appContext?.setWindowConfig(() => {
