@@ -15,14 +15,14 @@ function TaskbarItem({ image, title, onToggle }: TaskbarItemProps) {
       if (activeAppIndex != -1) {
         let activeApp = appContext?.windowConfig[activeAppIndex];
         if (!activeApp?.isActive) {
-          activeApp = { ...activeApp!, isActive: true };
+          activeApp = { ...activeApp!, isActive: true, hidden: false };
         }
         newAppConfig[activeAppIndex] = activeApp;
 
         appContext?.setWindowConfig(newAppConfig);
       } else {
         if (app) {
-          app = { ...app, isActive: true, zIndex: 41 };
+          app = { ...app, isActive: true, zIndex: 41, hidden: false };
           let inactiveApps: IWindow[] = newAppConfig.map((el) => {
             return { ...el, isActive: false, zIndex: 40 };
           });

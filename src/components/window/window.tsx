@@ -69,21 +69,35 @@ function Window({
   }
 
   function _onClose() {
+    const lastUnHiddenApp = appContext?.windowConfig
+      ?.slice()
+      ?.reverse()
+      ?.find((app) => app.hidden === false && app.title !== title);
+    console.log(appContext?.windowConfig);
     let newConfig = appContext?.windowConfig.filter((app) => {
       return app.title !== title;
     });
-    if (newConfig && newConfig.length > 0)
-      appContext?.setWindowConfig(newConfig);
-    appContext?.setWindowConfig([]);
+
+    if (!newConfig || newConfig.length === 0) {
+      appContext?.setWindowConfig([]);
+    } else {
+      if (lastUnHiddenApp) {
+        newConfig![newConfig!.indexOf(lastUnHiddenApp)] = {
+          ...lastUnHiddenApp,
+          isActive: true,
+          hidden: false,
+        };
+      }
+      if (newConfig && newConfig.length > 0)
+        appContext?.setWindowConfig(newConfig);
+    }
   }
   function _onMinimise() {
     appContext?.setWindowConfig(() => {
       const newConfig = appContext?.windowConfig.map((app) => {
         if (app.title === title) {
-          app.width = 0;
-          app.height = 0;
           app.isActive = false;
-          app.opacity = 0;
+          app.hidden = true;
           return app;
         }
         return app;
@@ -94,6 +108,7 @@ function Window({
   return (
     <div
       style={{ ...styles, ...rest }}
+      hidden={rest.hidden}
       className={cn(
         " border border-stone-700  rounded-2xl  bg-dark-highlight  absolute text-primary-accent",
         className

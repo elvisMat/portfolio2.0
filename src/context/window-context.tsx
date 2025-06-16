@@ -8,6 +8,7 @@ export interface IWindow extends CSSProperties {
   title?: WindowTitles;
   children?: React.ReactNode;
   isActive?: boolean;
+  hidden?: boolean;
   isOpenByDefault?: boolean;
   icon?: string;
 }

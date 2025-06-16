@@ -5,11 +5,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import {
-  IWindowContext,
-  WindowContext,
-  IWindow,
-} from "./context/window-context";
+import { WindowContext, IWindow } from "./context/window-context";
 import { AppConfig } from "./app-config";
 
 function App({ children }: { children?: ReactNode }) {

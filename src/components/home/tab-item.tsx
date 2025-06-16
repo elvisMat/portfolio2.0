@@ -17,24 +17,27 @@ function TabItem({
 
   const _onClick = () => {
     if (isActive) {
-      return;
+      appContext?.setWindowConfig?.(
+        appContext?.windowConfig?.map((el) => {
+          return { ...el, zIndex: 0, isActive: false, hidden: true };
+        })
+      );
     } else {
       let app = appContext?.allWindowConfig.find((el) => el.title === title);
-      console.log(app);
       appContext?.setWindowConfig?.(
         appContext?.windowConfig?.map((el) => {
           if (el.title === title) {
-            console.log(app);
             return {
               ...el,
               isActive: true,
+              hidden: false,
               zIndex: 41,
               width: app?.width,
               height: app?.height,
               opacity: 1,
             };
           }
-          return { ...el };
+          return { ...el, zIndex: 0, isActive: false };
         })
       );
     }

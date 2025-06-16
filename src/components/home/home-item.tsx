@@ -8,22 +8,38 @@ function HomeItem({ image, title }: HomeItemProps) {
   const appContext = useContext(WindowContext);
 
   const _onClick = () => {
-    let app = appContext?.allWindowConfig.find((el) => el.title === title);
-    appContext?.setWindowConfig?.(
-      appContext?.windowConfig?.map((el) => {
-        if (el.title === title) {
-          return {
-            ...el,
-            isActive: true,
-            zIndex: 41,
-            width: app?.width,
-            height: app?.height,
-            opacity: 1,
-          };
-        }
-        return { ...el, isActive: false, zIndex: 40 };
-      })
+    const existingAppIndex = appContext?.windowConfig.findIndex(
+      (el) => el.title === title
     );
+
+    let app = appContext?.allWindowConfig.find((el) => el.title === title);
+
+    if (!app) {
+      throw new Error("App does not have an app config");
+    }
+    console.log(existingAppIndex);
+    if (existingAppIndex != -1) {
+      appContext?.setWindowConfig?.(
+        appContext?.windowConfig?.map((el) => {
+          if (el.title === title) {
+            return {
+              ...el,
+              isActive: true,
+              hidden: false,
+              zIndex: 41,
+
+              opacity: 1,
+            };
+          }
+          return { ...el, zIndex: 0, isActive: false };
+        })
+      );
+    } else {
+      appContext?.setWindowConfig([
+        ...appContext.windowConfig,
+        { ...app, isActive: true, zIndex: 41, hidden: false },
+      ]);
+    }
   };
   return (
     <div
