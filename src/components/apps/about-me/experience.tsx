@@ -15,7 +15,7 @@ const experiences: Experience[] = [
   {
     title: "Software Engineer",
     company: "Africort Investments",
-    location: "Gaborone, Botswaan",
+    location: "Gaborone, Botswana",
     date: "APR 2024 - PRESENT",
     description: `Africort Investments is known for developing the Work and Residence Permit System for the One Government Platform, a national digital service initiative. The system enables users to apply for work and residence permits online through a streamlined, secure, and user-friendly interface. Built with modern technologies and industry best practices, the platform emphasizes performance, reliability, and maintainability. In my role, I contributed to the development and optimization of key system components, ensuring high availability and seamless user interactions. `,
     technologies: [
@@ -66,10 +66,12 @@ const ExperienceSection = () => {
   return (
     <section
       style={{ height: `${appConfig?.height}px` }}
-      className="py-2 px-4  sm:px-6 lg:px-8 bg-gray-950 overflow-y-scroll overflow-x-hidden"
+      className="py-2 px-4  sm:px-6 lg:px-8 bg-dark-base overflow-y-scroll overflow-x-hidden"
     >
       <div className="max-w-7xl mx-auto overflow-hidden">
-        <h1 className=" text-center text-3xl py-2 font-bold">Experience</h1>
+        <h1 className=" text-center text-3xl py-2 mb-3 font-bold">
+          Experience
+        </h1>
         <div className="relative">
           {/* Vertical Line */}
           <div className="absolute left-4 sm:left-8 md:left-12 top-0 bottom-0 w-1 bg-gray-700"></div>

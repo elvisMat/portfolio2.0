@@ -14,7 +14,7 @@ const educations: Education[] = [
   {
     degree: "Bachelor of Science in Computer Science (CS)",
     institution: "University of Botswana (UB)",
-    location: "Dhaka, Bangladesh",
+    location: "Gaborone, Botswana",
     date: "2016-Present",
   },
   // {
@@ -34,10 +34,10 @@ const EducationSection = () => {
   return (
     <section
       style={{ height: `${appConfig?.height}px` }}
-      className="py-2 px-4  sm:px-6 lg:px-8 bg-gray-950 w-full"
+      className="py-2 px-4  sm:px-6 lg:px-8 bg-dark-base w-full"
     >
       <div className="max-w-7xl mx-auto overflow-hidden">
-        <h1 className=" text-center text-3xl py-2 font-bold">Education</h1>
+        <h1 className=" text-center text-3xl py-2 mb-3 font-bold">Education</h1>
         <div className="relative">
           {/* Vertical Line */}
           <div className="absolute left-4 sm:left-8 md:left-12 top-0 bottom-0 w-1 bg-gray-700"></div>
