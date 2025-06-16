@@ -18,11 +18,11 @@
   WORKDIR /app
   
   # Copy built app from builder
-  COPY --from=builder /app/build ./build
+ # COPY --from=builder /app/build ./build
   
   # Expose port 3000
   EXPOSE 3000
   
   # Serve the app
-  CMD ["serve", "-s", "build", "-l", "3000"]
+  CMD ["serve", "-s", "dist", "-l", "3000"]
   
