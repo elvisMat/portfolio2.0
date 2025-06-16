@@ -18,7 +18,7 @@
   WORKDIR /app
   
   # Copy built app from builder
- # COPY --from=builder /app/build ./build
+  COPY --from=builder /app/dist ./dist
   
   # Expose port 3000
   EXPOSE 3000
