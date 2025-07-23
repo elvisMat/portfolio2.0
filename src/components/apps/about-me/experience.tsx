@@ -59,9 +59,7 @@ const experiences: Experience[] = [
 const ExperienceSection = () => {
   const appContext = useContext(WindowContext);
 
-  const appConfig = appContext?.allWindowConfig.find(
-    (app) => app.title === "About Rapelang"
-  );
+  const appConfig = appContext?.allWindowConfig["about-me"];
 
   return (
     <section

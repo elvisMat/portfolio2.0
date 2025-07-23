@@ -11,7 +11,7 @@ import { AppConfig } from "./app-config";
 function App({ children }: { children?: ReactNode }) {
   const [windowConfig, setWindowConfig] = useState<IWindow[]>(
     []
-    // AppConfig.filter((app) => app.title === "About Rapelang")
+    // AppConfig.filter((app) => app.title === "About Me")
   );
   const allWindowConfig = useMemo(() => AppConfig, []);
 

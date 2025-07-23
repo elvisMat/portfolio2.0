@@ -9,6 +9,8 @@ import TabItem from "../home/tab-item";
 function Bar({ className }: BarProps) {
   const { isOpen, onToggle } = useDisclosure();
   const appContext = useContext(WindowContext);
+  const appContextArray = Object.values(appContext?.windowConfig || {});
+
   return (
     <div className={cn("bg-dark-base glass relative", className)}>
       <div className="mt-2 flex flex-col items-center">
@@ -16,8 +18,9 @@ function Bar({ className }: BarProps) {
           <BiSolidGrid className="text-white " size={30} />
         </div>
         <div className="flex flex-col gap-4 mt-4">
-          {appContext?.windowConfig?.map((el) => (
+          {appContextArray?.map((el) => (
             <TabItem
+              key={el.title}
               title={el.title!}
               isActive={el.isActive!}
               image={el.icon!}

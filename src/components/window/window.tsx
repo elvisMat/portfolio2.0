@@ -1,10 +1,11 @@
-import React, { CSSProperties, ReactNode, useEffect } from "react";
+import React from "react";
 import CloseButton from "./close-button";
 import ExpandButton from "./expand-button";
 import MenuButton from "./menu-button";
 import MinimiseButton from "./minimise-button";
 import { cn } from "../../lib/utils";
 import { IWindow, WindowContext } from "../../context/window-context";
+import { useClickIn } from "../../hooks/useClickIn";
 // 412B22
 // 32211A
 function Window({
@@ -16,20 +17,28 @@ function Window({
   yOffset = 20,
   zIndex = 40,
   title,
+  defaultState,
   ...rest
 }: IWindow) {
-  const styles = {
+  const [styles, setStyles] = React.useState({
     width: `${width}px`,
     height: `${height}px`,
     top: `${yOffset}px`,
     left: `${xOffset}px`,
     zIndex: zIndex,
-  };
+  });
 
   const [isDragging, setIsDragging] = React.useState(false);
   const moveOffset = React.useRef({ x: 0.1, y: 0.1 });
   const appContext = React.useContext(WindowContext);
 
+  const ref = useClickIn(() => {
+    if (appContext) {
+      _setWindowActive();
+    }
+  });
+
+  const _setWindowActive = () => {};
   function _onMouseDown(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.preventDefault();
     e.stopPropagation();
@@ -52,61 +61,17 @@ function Window({
     e.preventDefault();
     e.stopPropagation();
     if (!isDragging) return;
-    const x = e.movementX;
-    const y = e.movementY;
-    appContext?.setWindowConfig(() => {
-      let thisApp = appContext?.windowConfig.find((app) => app.title === title);
-      if (!thisApp) return appContext?.windowConfig;
-      thisApp.xOffset += x;
-      thisApp.yOffset += y;
-      const newConfig = appContext?.windowConfig.map((app) => {
-        if (app.title === title) return thisApp;
-        return app;
-      });
-      return newConfig;
-    });
+    const x = e.clientX - moveOffset.current.x;
+    const y = e.clientY - moveOffset.current.y;
     console.log("mouse move", x, y);
   }
 
-  function _onClose() {
-    const lastUnHiddenApp = appContext?.windowConfig
-      ?.slice()
-      ?.reverse()
-      ?.find((app) => app.hidden === false && app.title !== title);
-    console.log(appContext?.windowConfig);
-    let newConfig = appContext?.windowConfig.filter((app) => {
-      return app.title !== title;
-    });
+  function _onClose() {}
+  function _onMinimise() {}
 
-    if (!newConfig || newConfig.length === 0) {
-      appContext?.setWindowConfig([]);
-    } else {
-      if (lastUnHiddenApp) {
-        newConfig![newConfig!.indexOf(lastUnHiddenApp)] = {
-          ...lastUnHiddenApp,
-          isActive: true,
-          hidden: false,
-        };
-      }
-      if (newConfig && newConfig.length > 0)
-        appContext?.setWindowConfig(newConfig);
-    }
-  }
-  function _onMinimise() {
-    appContext?.setWindowConfig(() => {
-      const newConfig = appContext?.windowConfig.map((app) => {
-        if (app.title === title) {
-          app.isActive = false;
-          app.hidden = true;
-          return app;
-        }
-        return app;
-      });
-      return newConfig;
-    });
-  }
   return (
     <div
+      ref={ref as React.RefObject<HTMLDivElement>}
       style={{ ...styles, ...rest }}
       hidden={rest.hidden}
       className={cn(
@@ -124,6 +89,7 @@ function Window({
           {title}
         </div>
         <div className=" m-2 flex gap-2 items-center mr-3 justify-end">
+          {defaultState}
           <MenuButton />
           <MinimiseButton onClick={_onMinimise} />
           <ExpandButton />

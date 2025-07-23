@@ -17,29 +17,9 @@ function TabItem({
 
   const _onClick = () => {
     if (isActive) {
-      appContext?.setWindowConfig?.(
-        appContext?.windowConfig?.map((el) => {
-          return { ...el, zIndex: 0, isActive: false, hidden: true };
-        })
-      );
+      console.log("Window is already active");
     } else {
-      let app = appContext?.allWindowConfig.find((el) => el.title === title);
-      appContext?.setWindowConfig?.(
-        appContext?.windowConfig?.map((el) => {
-          if (el.title === title) {
-            return {
-              ...el,
-              isActive: true,
-              hidden: false,
-              zIndex: 41,
-              width: app?.width,
-              height: app?.height,
-              opacity: 1,
-            };
-          }
-          return { ...el, zIndex: 0, isActive: false };
-        })
-      );
+      console.log("Setting window active");
     }
   };
   return (

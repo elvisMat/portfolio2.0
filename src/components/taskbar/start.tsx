@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { StartProps } from "../../interfaces/taskbar";
+import { ItemProps, StartProps } from "../../interfaces/taskbar";
 import TaskbarItem from "./taskbar-item";
 import { cn } from "../../lib/utils";
 import {
@@ -16,22 +16,30 @@ import {
 } from "./images";
 import { Input } from "../ui/IconInput";
 import useDebounce from "../../hooks/useDebouncedValue";
+import { useClickAway } from "../../hooks/useClickAway";
+import { WindowContext } from "../../context/window-context";
+import { searchKeysByTitle } from "../../app-config";
 
 // title must match app title
-const taskbarItems = [
-  { id: 1, image: Calculator, title: "Calculator" },
-  { id: 2, image: FileManager, title: "About Rapelang" },
-  { id: 3, image: Chrome, title: "Chrome" },
-  { id: 4, image: VSCode, title: "Visual studio code" },
-  { id: 5, image: Youtube, title: "Youtube" },
-  { id: 6, image: Spotify, title: "Spotify" },
-  { id: 7, image: Terminal, title: "Terminal" },
-  { id: 8, image: CogWheel, title: "Settings" },
-  { id: 9, image: Trash, title: "Trash" },
+const taskbarItems: ItemProps[] = [
+  { image: Calculator, windowId: "calculator" },
+  { image: FileManager, windowId: "about-me" },
+  { image: Chrome, windowId: "chrome" },
+  // { image: VSCode, windowId: "vs-code" },
+  // { image: Youtube, windowId: "youtube" },
+  // { image: Spotify, windowId: "spotify" },
+  // { image: Terminal, windowId: "terminal" },
+  // { image: CogWheel, windowId: "settings" },
+  // { image: Trash, windowId: "trash" },
 ];
 
 function Start({ isOpened, onToggle }: StartProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const ref = useClickAway(() => {
+    if (isOpened) onToggle();
+  });
+  const appContext = React.useContext(WindowContext);
+
   //Focus on input when start menu is shown
   useEffect(() => {
     if (isOpened && inputRef.current) {
@@ -45,12 +53,12 @@ function Start({ isOpened, onToggle }: StartProps) {
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      // Filter taskbarItems by checking if the title contains the search term
-      setItems(
-        taskbarItems.filter((el) =>
-          el.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-        )
-      );
+      // Search for apps that match the search term
+      const apps = searchKeysByTitle(debouncedSearchTerm);
+      // Filter taskbar items based on search term
+      // If the search term matches any app title, show that item
+      // Otherwise, show no items
+      setItems(taskbarItems.filter((el) => apps.includes(el.windowId)));
     } else {
       // If no search term, show all items
       setItems(taskbarItems);
@@ -59,20 +67,21 @@ function Start({ isOpened, onToggle }: StartProps) {
   const renderTaskbarItem = (el: (typeof taskbarItems)[0]) => (
     <TaskbarItem
       onToggle={onToggle}
-      key={el.id}
+      key={el.windowId}
       image={el.image}
-      title={el.title}
+      windowId={el.windowId}
     />
   );
   return (
     <div
+      ref={ref as React.RefObject<HTMLDivElement>}
       className={cn(
         "text-primary-accent shadow-2xl shadow-stone-900 bg-dark-highlight w-[410px] overflow-auto absolute left-[50px] h-[460px] rounded-lg top-[10px]",
         isOpened ? "block" : "hidden"
       )}
     >
       <div className="grid grid-cols-12 ">
-        <div className="col-span-7 h-[380px] pb-2  m-3 bg-dark-base flex-col flex">
+        <div className="col-span-7  h-[380px] pb-2  m-3 bg-dark-base flex-col flex">
           {items.map(renderTaskbarItem)}
         </div>
         <div className="col-span-5 bg-dark-highlight m-3">Raps</div>

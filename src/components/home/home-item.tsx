@@ -3,44 +3,24 @@ import { HomeItemProps } from "../../interfaces/taskbar";
 import { cn } from "../../lib/utils";
 import { useIsHovered } from "../../hooks/useIsHovered";
 import { WindowContext } from "../../context/window-context";
-function HomeItem({ image, title }: HomeItemProps) {
+import { AppConfigType } from "../../app-config";
+function HomeItem({ image, windowId }: HomeItemProps) {
   const { _onMouseEnter, _onMouseLeave, hovered } = useIsHovered();
   const appContext = useContext(WindowContext);
 
+  let app = appContext?.allWindowConfig[windowId];
   const _onClick = () => {
-    const existingAppIndex = appContext?.windowConfig.findIndex(
-      (el) => el.title === title
-    );
-
-    let app = appContext?.allWindowConfig.find((el) => el.title === title);
-
-    if (!app) {
-      throw new Error("App does not have an app config");
+    const existingAppIndex = appContext?.windowConfig[windowId];
+    if (!existingAppIndex) {
+      const prevConfig = appContext?.windowConfig || {};
+      const newConfig: AppConfigType = { ...prevConfig, [windowId]: app };
+      appContext?.setWindowConfig(newConfig);
     }
     console.log(existingAppIndex);
-    if (existingAppIndex != -1) {
-      appContext?.setWindowConfig?.(
-        appContext?.windowConfig?.map((el) => {
-          if (el.title === title) {
-            return {
-              ...el,
-              isActive: true,
-              hidden: false,
-              zIndex: 41,
-
-              opacity: 1,
-            };
-          }
-          return { ...el, zIndex: 0, isActive: false };
-        })
-      );
-    } else {
-      appContext?.setWindowConfig([
-        ...appContext.windowConfig,
-        { ...app, isActive: true, zIndex: 41, hidden: false },
-      ]);
-    }
   };
+  if (!app) {
+    throw new Error("App not found in context");
+  }
   return (
     <div
       onClick={_onClick}
@@ -55,7 +35,7 @@ function HomeItem({ image, title }: HomeItemProps) {
         className={cn("w-[40px]", hovered ? "opacity-80" : "opacity-100")}
         alt="Chrome icon"
       />
-      <div className={cn("text-white mt-1")}>{title}</div>
+      <div className={cn("text-white mt-1")}>{app.title}</div>
     </div>
   );
 }
