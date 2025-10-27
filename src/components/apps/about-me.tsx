@@ -13,6 +13,7 @@ import ExperienceSection from "./about-me/experience";
 import EducationSection from "./about-me/education";
 import { WindowContext } from "../../context/window-context";
 import Window from "../../components/window/window";
+import { useWindowStateMachine } from "../../hooks/useWindowState";
 
 export default function AboutMe() {
   const [section, setSection] = React.useState<
@@ -22,7 +23,8 @@ export default function AboutMe() {
   const appContext = React.useContext(WindowContext);
   if (!appContext) return null;
 
-  const aboutMeContext = appContext?.allWindowConfig["about-me"];
+  const aboutMeContext = appContext?.allWindowConfig!["about-me"];
+  if (!aboutMeContext) return null;
   const getSections = React.useMemo(() => {
     switch (section) {
       case "main":
@@ -37,8 +39,17 @@ export default function AboutMe() {
         return null;
     }
   }, [section]);
+
+  const { currentState, transition } = useWindowStateMachine(
+    "OPEN",
+    "about-me"
+  );
   return (
-    <Window {...aboutMeContext}>
+    <Window
+      defaultState={currentState}
+      {...aboutMeContext}
+      transitionTo={transition}
+    >
       <div className=" bg-dark-base text-white flex">
         <aside className="min-w-64 bg p-2 space-y-2 border-r-2  border-dark-highlight">
           <nav className=" text-sm space-y-1">

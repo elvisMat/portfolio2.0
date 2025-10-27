@@ -7,9 +7,11 @@ import {
 } from "./components/taskbar/images";
 import Calculator from "./components/apps/calculator";
 import AboutMe from "./components/apps/about-me";
-export type AppConfigType = {
-  [key in WindowIds]: IWindow;
-};
+export type AppConfigType =
+  | {
+      [key in WindowIds]: IWindow;
+    }
+  | null;
 
 export const AppConfig: AppConfigType = {
   chrome: {
@@ -24,8 +26,9 @@ export const AppConfig: AppConfigType = {
         url={"https://www.google.com/webhp?igu=1"}
       />
     ),
-    isActive: false,
+    isActive: true,
     icon: ChromeIcon,
+    transitionTo: () => {},
   },
   calculator: {
     title: "Calculator",
@@ -35,8 +38,9 @@ export const AppConfig: AppConfigType = {
     width: 345,
     height: 435,
     children: <Calculator />,
-    isActive: false,
+    isActive: true,
     icon: CalculatorImage,
+    transitionTo: () => {},
   },
   "about-me": {
     title: "About Me",
@@ -46,11 +50,13 @@ export const AppConfig: AppConfigType = {
     width: 1000,
     height: 635,
     children: <AboutMe />,
-    isActive: false,
+    isActive: true,
     icon: FileManagerIcon,
+    transitionTo: () => {},
   },
 };
 export function searchKeysByTitle(title: string): string[] {
+  if (AppConfig === null) return [];
   return Object.entries(AppConfig)
     .filter(([_, config]) =>
       config.title?.toLowerCase().includes(title.toLowerCase())

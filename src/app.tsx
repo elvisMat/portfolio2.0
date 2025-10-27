@@ -5,14 +5,13 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { WindowContext, IWindow } from "./context/window-context";
-import { AppConfig } from "./app-config";
+import { WindowContext, IWindow, WindowIds } from "./context/window-context";
+import { AppConfig, AppConfigType } from "./app-config";
 
 function App({ children }: { children?: ReactNode }) {
-  const [windowConfig, setWindowConfig] = useState<IWindow[]>(
-    []
-    // AppConfig.filter((app) => app.title === "About Me")
-  );
+  const [windowConfig, setWindowConfig] = useState<AppConfigType>(null);
+
+  // AppConfig.filter((app) => app.title === "About Me")
   const allWindowConfig = useMemo(() => AppConfig, []);
 
   useEffect(() => {
@@ -27,10 +26,30 @@ function App({ children }: { children?: ReactNode }) {
     //   setWindowConfig(JSON.parse(data))
     // }
   }, []);
+  const closeWindow = (windowId: WindowIds) => {
+    if (!windowConfig) return;
+    let newConfig: AppConfigType = { ...windowConfig };
+    delete newConfig![windowId];
+    console.log(newConfig);
+    setWindowConfig(newConfig);
+  };
 
+  const minimizeWindow = (windowId: WindowIds) => {
+    if (!windowConfig) return;
+    let newConfig: AppConfigType = { ...windowConfig };
+    newConfig[windowId] = { ...newConfig[windowId], hidden: true };
+    console.log(newConfig);
+    setWindowConfig(newConfig);
+  };
   return (
     <WindowContext.Provider
-      value={{ windowConfig, setWindowConfig, allWindowConfig }}
+      value={{
+        windowConfig,
+        setWindowConfig,
+        allWindowConfig,
+        closeWindow,
+        minimizeWindow,
+      }}
     >
       {children}
     </WindowContext.Provider>

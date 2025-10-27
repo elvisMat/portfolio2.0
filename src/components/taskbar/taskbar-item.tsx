@@ -5,7 +5,7 @@ import { IWindow, WindowContext } from "../../context/window-context";
 function TaskbarItem({ image, windowId, onToggle }: TaskbarItemProps) {
   const appContext = React.useContext(WindowContext);
 
-  const app = appContext?.allWindowConfig[windowId];
+  const app = appContext?.allWindowConfig![windowId];
   if (!app) {
     throw new Error("App not found in context");
   }

@@ -63,11 +63,15 @@ function Window({
     if (!isDragging) return;
     const x = e.clientX - moveOffset.current.x;
     const y = e.clientY - moveOffset.current.y;
-    console.log("mouse move", x, y);
   }
 
-  function _onClose() {}
-  function _onMinimise() {}
+  function _onClose() {
+    rest.transitionTo("CLOSED");
+  }
+  function _onMinimise() {
+    rest.transitionTo("MINIMIZED");
+    setStyles((prev) => ({ ...prev, zIndex: 0, opacity: 0 }));
+  }
 
   return (
     <div
@@ -89,7 +93,6 @@ function Window({
           {title}
         </div>
         <div className=" m-2 flex gap-2 items-center mr-3 justify-end">
-          {defaultState}
           <MenuButton />
           <MinimiseButton onClick={_onMinimise} />
           <ExpandButton />

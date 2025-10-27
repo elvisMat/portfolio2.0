@@ -1,21 +1,16 @@
-import { useState, useCallback } from "react";
-import { WindowIds } from "../context/window-context";
-
+import { useState, useCallback, useContext } from "react";
+import { WindowContext, WindowIds } from "../context/window-context";
 // Define allowed window states
-export type WindowState = "CLOSED" | "MAXIMIZED" | "MINIMIZED" | "NORMAL";
+export type WindowState = "CLOSED" | "OPEN" | "MINIMIZED";
 
-// Constants for easier reference
 const CLOSED: WindowState = "CLOSED";
-const MAXIMIZED: WindowState = "MAXIMIZED";
-const NORMAL: WindowState = "NORMAL";
-const MINIMIZED: WindowState = "MINIMIZED";
+const OPEN: WindowState = "OPEN";
+const MIN: WindowState = "MINIMIZED";
 
 // Define allowed transitions from each state
 type StateTransitions = {
   [K in WindowState]: Partial<Record<WindowState, () => void>>;
 };
-
-// Hook return type
 interface UseWindowStateMachineReturn {
   currentState: WindowState;
   transition: (newState: WindowState) => void;
@@ -25,30 +20,33 @@ interface UseWindowStateMachineReturn {
 
 export const useWindowStateMachine = (
   initialState: WindowState = CLOSED,
-  windowId?: WindowIds,
+  windowId: WindowIds,
   onTransition?: (from: WindowState, to: WindowState) => void
 ): UseWindowStateMachineReturn => {
   const [currentState, setCurrentState] = useState<WindowState>(initialState);
 
+  const appContext = useContext(WindowContext);
+
   // Define the state machine transitions
   const stateTransitions: StateTransitions = {
     [CLOSED]: {
-      [MAXIMIZED]: () => console.log("Maximizing from CLOSED"),
-      [MINIMIZED]: () => console.log("Minimizing from CLOSED"),
-      [NORMAL]: () => console.log("Restoring from CLOSED"),
+      [OPEN]: () => {
+        //console.log("Opening from CLOSED");
+      },
     },
-    [MAXIMIZED]: {
-      [MINIMIZED]: () => console.log("Minimizing from MAXIMIZED"),
-      [NORMAL]: () => console.log("Restoring from MAXIMIZED"),
+    [OPEN]: {
+      [CLOSED]: () => {
+        let app = appContext?.windowConfig![windowId];
+        if (!app) {
+          throw new Error("App not found in context");
+        }
+        //remove app fron window config
+        appContext?.closeWindow(windowId);
+      },
+      [MIN]: () => {},
     },
-    [MINIMIZED]: {
-      [MAXIMIZED]: () => console.log("Maximizing from MINIMIZED"),
-      [NORMAL]: () => console.log("Restoring from MINIMIZED"),
-    },
-    [NORMAL]: {
-      [MAXIMIZED]: () => console.log("Maximizing from NORMAL"),
-      [MINIMIZED]: () => console.log("Minimizing from NORMAL"),
-      [CLOSED]: () => console.log("Closing from NORMAL"),
+    [MIN]: {
+      [OPEN]: () => {},
     },
   };
 

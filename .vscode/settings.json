@@ -1,3 +1,4 @@
 {
-  "terminal.integrated.env.osx": {}
+  "terminal.integrated.env.osx": {},
+  "kiroAgent.configureMCP": "Disabled"
 }

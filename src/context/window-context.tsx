@@ -1,5 +1,5 @@
 import { createContext, CSSProperties } from "react";
-import { WindowState } from "../hooks/useWindowStateMachine";
+import { WindowState } from "../hooks/useWindowState";
 import { AppConfigType } from "../app-config";
 
 export type WindowTitles = "About Me" | "Chrome" | "Calculator";
@@ -15,10 +15,13 @@ export interface IWindow extends CSSProperties {
   isOpenByDefault?: boolean;
   icon?: string;
   defaultState?: WindowState;
+  transitionTo: (newState: WindowState) => void;
 }
 export interface IWindowContext {
   windowConfig: AppConfigType;
   setWindowConfig: (config: AppConfigType | (() => AppConfigType)) => void;
   allWindowConfig: AppConfigType;
+  closeWindow: (windowId: WindowIds) => void;
+  minimizeWindow: (windowId: WindowIds) => void;
 }
 export const WindowContext = createContext<IWindowContext | null>(null);

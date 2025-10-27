@@ -3,21 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { ItemProps, StartProps } from "../../interfaces/taskbar";
 import TaskbarItem from "./taskbar-item";
 import { cn } from "../../lib/utils";
-import {
-  Calculator,
-  Chrome,
-  VSCode,
-  FileManager,
-  Spotify,
-  Terminal,
-  Youtube,
-  Trash,
-  CogWheel,
-} from "./images";
+import { Calculator, Chrome, FileManager } from "./images";
 import { Input } from "../ui/IconInput";
 import useDebounce from "../../hooks/useDebouncedValue";
 import { useClickAway } from "../../hooks/useClickAway";
-import { WindowContext } from "../../context/window-context";
 import { searchKeysByTitle } from "../../app-config";
 
 // title must match app title
@@ -38,7 +27,6 @@ function Start({ isOpened, onToggle }: StartProps) {
   const ref = useClickAway(() => {
     if (isOpened) onToggle();
   });
-  const appContext = React.useContext(WindowContext);
 
   //Focus on input when start menu is shown
   useEffect(() => {

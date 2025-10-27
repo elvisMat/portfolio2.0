@@ -2,7 +2,7 @@ import UrlBar from "./chrome/url-bar";
 import Window from "../../components/window/window";
 import { WindowContext } from "../../context/window-context";
 import React from "react";
-import { useWindowStateMachine } from "../../hooks/useWindowStateMachine";
+import { useWindowStateMachine } from "../../hooks/useWindowState";
 interface Props {
   url: string;
   displayUrl?: string;
@@ -18,18 +18,16 @@ function Chrome({ url, displayUrl }: Props) {
   };
   const appContext = React.useContext(WindowContext);
   if (!appContext) return null;
-  const chromeContext = appContext?.allWindowConfig["chrome"];
+  const chromeContext = appContext?.allWindowConfig!["chrome"];
   if (!chromeContext) return null;
 
-  const { currentState } = useWindowStateMachine(
-    "NORMAL",
-    "chrome",
-    (from, to) => {
-      console.log(`Transitioning from ${from} to ${to}`);
-    }
-  );
+  const { currentState, transition } = useWindowStateMachine("OPEN", "chrome");
   return (
-    <Window defaultState={currentState} {...chromeContext}>
+    <Window
+      defaultState={currentState}
+      {...chromeContext}
+      transitionTo={transition}
+    >
       <div>
         <div className="bg-dark-base">
           <UrlBar onClick={refreshURL} displayUrl={displayUrl} />
