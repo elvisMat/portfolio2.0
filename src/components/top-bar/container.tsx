@@ -21,9 +21,9 @@ export function TopBar() {
   return (
     <div className="h-[30px] text-primary-accent z-10 shadow-sm">
       <div className="bg-dark-highlight  h-full w-full flex justify-between items-center pr-4">
-        <p className="pl-4 flex items-center gap-2 font-bold text-[0.75rem]">
+        <button className="pl-4 flex items-center gap-2 font-bold text-[0.75rem]">
           <BiWindows size={20} /> Zorin OS
-        </p>
+        </button>
         <p className="font-bold text-[0.75rem] mt-1">
           {format(new Date(), "EEE, MMM d, yyyy h:mm a")}
         </p>
