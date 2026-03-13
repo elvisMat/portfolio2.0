@@ -26,9 +26,9 @@ export default function Calculator() {
       "OPEN",
       "calculator"
     );
-  const handleClear = () => {
-    setDisplay("0");
-  };
+  // const handleClear = () => {
+  //   setDisplay("0");
+  // };
 
   const handleBackspace = () => {
     setDisplay((prev) => {

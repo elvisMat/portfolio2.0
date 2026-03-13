@@ -16,6 +16,7 @@ export interface IWindow extends CSSProperties {
   icon?: string;
   defaultState?: WindowState;
   transitionTo: (newState: WindowState) => void;
+  appId?: WindowIds;
 }
 export interface IWindowContext {
   windowConfig: AppConfigType;
@@ -23,5 +24,6 @@ export interface IWindowContext {
   allWindowConfig: AppConfigType;
   closeWindow: (windowId: WindowIds) => void;
   minimizeWindow: (windowId: WindowIds) => void;
+  activateWindow: (windowId: WindowIds) => void;
 }
 export const WindowContext = createContext<IWindowContext | null>(null);

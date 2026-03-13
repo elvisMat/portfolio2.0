@@ -16,8 +16,8 @@ export type AppConfigType =
 export const AppConfig: AppConfigType = {
   chrome: {
     title: "Chrome",
-    xOffset: 60,
-    yOffset: 20,
+    xOffset: 65,
+    yOffset: 45,
     zIndex: 41,
 
     children: (
@@ -44,8 +44,8 @@ export const AppConfig: AppConfigType = {
   },
   "about-me": {
     title: "About Me",
-    yOffset: 20,
-    xOffset: 70,
+    xOffset: 65,
+    yOffset: 45,
     zIndex: 40,
     width: 1000,
     height: 635,

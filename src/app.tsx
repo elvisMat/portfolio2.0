@@ -1,15 +1,16 @@
-import React, {
+import  {
   ReactNode,
-  useContext,
+  // useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import { WindowContext, IWindow, WindowIds } from "./context/window-context";
+import { WindowContext, WindowIds } from "./context/window-context";
 import { AppConfig, AppConfigType } from "./app-config";
 
 function App({ children }: { children?: ReactNode }) {
   const [windowConfig, setWindowConfig] = useState<AppConfigType>(null);
+  // const [windowZIndexCounter, setWindowZIndexCounter] = useState(41);
 
   // AppConfig.filter((app) => app.title === "About Me")
   const allWindowConfig = useMemo(() => AppConfig, []);
@@ -37,8 +38,14 @@ function App({ children }: { children?: ReactNode }) {
   const minimizeWindow = (windowId: WindowIds) => {
     if (!windowConfig) return;
     let newConfig: AppConfigType = { ...windowConfig };
-    newConfig[windowId] = { ...newConfig[windowId], hidden: true };
-    console.log(newConfig);
+    newConfig[windowId] = { ...newConfig[windowId], hidden: true,isActive:false };
+  
+    setWindowConfig(newConfig);
+  };
+  const activateWindow = (windowId: WindowIds) => {
+    if (!windowConfig) return;
+    let newConfig: AppConfigType = { ...windowConfig };
+    newConfig[windowId] = { ...newConfig[windowId], isActive: true,hidden:false };
     setWindowConfig(newConfig);
   };
   return (
@@ -49,6 +56,12 @@ function App({ children }: { children?: ReactNode }) {
         allWindowConfig,
         closeWindow,
         minimizeWindow,
+        activateWindow,
+        //maximizeWindow: (windowId: WindowIds) => {},
+        // windowZIndexCounter,
+        // setWindowZIndexCounter,
+
+        
       }}
     >
       {children}

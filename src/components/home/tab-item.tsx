@@ -1,24 +1,30 @@
-import React, { useContext } from "react";
+// import React +
+// from "react";
 
 import { cn } from "../../lib/utils";
 import { useIsHovered } from "../../hooks/useIsHovered";
-import { WindowContext } from "../../context/window-context";
+import {  WindowIds } from "../../context/window-context";
+import { useWindowContext } from "../../hooks/useWindowContext";
 function TabItem({
   image,
   isActive,
   title,
+  appId
 }: {
   image: string;
   isActive: boolean;
   title: string;
+  appId: WindowIds;
 }) {
   const { _onMouseEnter, _onMouseLeave, hovered } = useIsHovered();
-  const appContext = useContext(WindowContext);
+  const appContext = useWindowContext()
 
   const _onClick = () => {
     if (isActive) {
       console.log("Window is already active");
+
     } else {
+      appContext?.activateWindow(appId);
       console.log("Setting window active");
     }
   };

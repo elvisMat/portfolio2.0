@@ -14,7 +14,7 @@ function Window({
   height = 560,
   className,
   xOffset = 60,
-  yOffset = 20,
+  yOffset = 70,
   zIndex = 40,
   title,
   defaultState,
@@ -29,7 +29,7 @@ function Window({
   });
 
   const [isDragging, setIsDragging] = React.useState(false);
-  const moveOffset = React.useRef({ x: 0.1, y: 0.1 });
+  // const moveOffset = React.useRef({ x: 0.1, y: 0.1 });
   const appContext = React.useContext(WindowContext);
 
   const ref = useClickIn(() => {
@@ -45,12 +45,12 @@ function Window({
     console.log("mouse down");
     setIsDragging(true);
   }
-  function _onMouseLeave(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    console.log("mouse leave");
-  }
+  // function _onMouseLeave(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   setIsDragging(false);
+  //   console.log("mouse leave");
+  // }
   function _onMouseUp(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.preventDefault();
     e.stopPropagation();
@@ -61,8 +61,8 @@ function Window({
     e.preventDefault();
     e.stopPropagation();
     if (!isDragging) return;
-    const x = e.clientX - moveOffset.current.x;
-    const y = e.clientY - moveOffset.current.y;
+    // const x = e.clientX - moveOffset.current.x;
+    // const y = e.clientY - moveOffset.current.y;
   }
 
   function _onClose() {

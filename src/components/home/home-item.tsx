@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { HomeItemProps } from "../../interfaces/taskbar";
 import { cn } from "../../lib/utils";
 import { useIsHovered } from "../../hooks/useIsHovered";
 import { IWindow, WindowContext } from "../../context/window-context";
 import { AppConfigType } from "../../app-config";
 function HomeItem({ image, windowId }: HomeItemProps) {
-  const { _onMouseEnter, _onMouseLeave, hovered } = useIsHovered();
+  const { hovered } = useIsHovered();
   const appContext = useContext(WindowContext);
 
   let app = appContext?.allWindowConfig![windowId];
@@ -37,7 +37,7 @@ function HomeItem({ image, windowId }: HomeItemProps) {
       const prevConfig = appContext?.windowConfig || {};
       const newConfig: AppConfigType = {
         ...prevConfig,
-        [windowId]: app,
+        [windowId]: {...app, appId:windowId},
       } as AppConfigType;
       appContext?.setWindowConfig(newConfig);
     }

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { cn } from "../../../lib/utils";
 import { WindowContext } from "../../../context/window-context";
 
@@ -27,7 +27,9 @@ const educations: Education[] = [
 
 const EducationSection = () => {
   const appContext = useContext(WindowContext);
-  const appConfig = appContext?.allWindowConfig["about-me"];
+  const appConfig = appContext!.allWindowConfig!["about-me"];
+
+  if(!appConfig) return null;
   return (
     <section
       style={{ height: `${appConfig?.height}px` }}

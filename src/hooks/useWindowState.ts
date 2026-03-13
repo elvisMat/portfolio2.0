@@ -43,7 +43,9 @@ export const useWindowStateMachine = (
         //remove app fron window config
         appContext?.closeWindow(windowId);
       },
-      [MIN]: () => {},
+      [MIN]: () => {
+        appContext?.minimizeWindow(windowId);
+      },
     },
     [MIN]: {
       [OPEN]: () => {},

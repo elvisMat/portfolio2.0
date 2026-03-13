@@ -1,8 +1,8 @@
 import React from "react";
 import { TaskbarItemProps } from "../../interfaces/taskbar";
-import { IWindow, WindowContext } from "../../context/window-context";
+import {  WindowContext } from "../../context/window-context";
 
-function TaskbarItem({ image, windowId, onToggle }: TaskbarItemProps) {
+function TaskbarItem({ image, windowId }: TaskbarItemProps) {
   const appContext = React.useContext(WindowContext);
 
   const app = appContext?.allWindowConfig![windowId];

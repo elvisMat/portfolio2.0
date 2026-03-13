@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { Badge } from "../../../components/ui/badge";
 import { cn } from "../../../lib/utils";
 import { WindowContext } from "../../../context/window-context";
@@ -59,7 +59,9 @@ const experiences: Experience[] = [
 const ExperienceSection = () => {
   const appContext = useContext(WindowContext);
 
-  const appConfig = appContext?.allWindowConfig["about-me"];
+  const appConfig = appContext!.allWindowConfig!["about-me"];
+
+  if(!appConfig) return null;
 
   return (
     <section

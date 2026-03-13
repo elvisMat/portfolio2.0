@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+// import React, { useContext } from "react";
 import { cn } from "../../lib/utils";
 import { BarProps } from "../../interfaces/taskbar";
 import { BiSolidGrid } from "react-icons/bi";
 import Start from "./start";
 import { useDisclosure } from "../../hooks/useDisclosure";
-import { WindowContext } from "../../context/window-context";
+// import { WindowContext } from "../../context/window-context";
 import TabItem from "../home/tab-item";
+import { useWindowContext } from "../../hooks/useWindowContext";
 function Bar({ className }: BarProps) {
   const { isOpen, onToggle } = useDisclosure();
-  const appContext = useContext(WindowContext);
+  const appContext = useWindowContext();
   const appContextArray = Object.values(appContext?.windowConfig || {});
 
   return (
@@ -24,6 +25,7 @@ function Bar({ className }: BarProps) {
               title={el.title!}
               isActive={el.isActive!}
               image={el.icon!}
+              appId={el.appId!}
             />
           ))}
         </div>
