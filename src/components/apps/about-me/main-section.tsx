@@ -1,10 +1,11 @@
 // import React from "react";
+import Me from "../../../assets/me.jpg";
 
 function MainSection() {
   return (
     <div className="flex-1 p-10 flex flex-col items-center text-center">
       <img
-        src="/profile.jpg"
+        src={Me}
         alt="Profile"
         className="w-32 h-32 rounded-full object-cover border-4 border-white"
       />

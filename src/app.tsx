@@ -1,7 +1,6 @@
 import  {
   ReactNode,
   // useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -9,24 +8,21 @@ import { WindowContext, WindowIds } from "./context/window-context";
 import { AppConfig, AppConfigType } from "./app-config";
 
 function App({ children }: { children?: ReactNode }) {
-  const [windowConfig, setWindowConfig] = useState<AppConfigType>(null);
+  const [windowConfig, setWindowConfig] = useState<AppConfigType>({
+    "about-me": {
+      ...AppConfig!["about-me"],
+      appId: "about-me",
+      isActive: true,
+      hidden: false,
+      opacity: 1,
+      zIndex: 41,
+    },
+  } as AppConfigType);
   // const [windowZIndexCounter, setWindowZIndexCounter] = useState(41);
 
   // AppConfig.filter((app) => app.title === "About Me")
   const allWindowConfig = useMemo(() => AppConfig, []);
 
-  useEffect(() => {
-    // setWindowConfig(AppConfig.filter((app) => app.isOpenByDefault));
-    // PRE_PROCUCTION: Uncomment the code below to persist window configuration
-    // const data = localStorage.getItem('window-config')
-    // if (!data) {
-    //   setWindowConfig(AppConfig)
-    //   localStorage.setItem('window-config', JSON.stringify(AppConfig))
-    // }
-    // else {
-    //   setWindowConfig(JSON.parse(data))
-    // }
-  }, []);
   const closeWindow = (windowId: WindowIds) => {
     if (!windowConfig) return;
     let newConfig: AppConfigType = { ...windowConfig };
@@ -45,9 +41,10 @@ function App({ children }: { children?: ReactNode }) {
   const activateWindow = (windowId: WindowIds) => {
     if (!windowConfig) return;
     let newConfig: AppConfigType = { ...windowConfig };
-    newConfig[windowId] = { ...newConfig[windowId], isActive: true,hidden:false };
+    newConfig[windowId] = { ...newConfig[windowId], isActive: true,hidden:false,opacity:1,zIndex:41 };
     setWindowConfig(newConfig);
   };
+
   return (
     <WindowContext.Provider
       value={{
