@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 
 import { ItemProps, StartProps } from "../../interfaces/taskbar";
@@ -24,9 +25,16 @@ const taskbarItems: ItemProps[] = [
 
 function Start({ isOpened, onToggle }: StartProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const ref = useClickAway(() => {
-    if (isOpened) onToggle();
-  });
+  const ref = useClickAway(
+    () => {
+      if (isOpened) {
+        console.log("click away");
+        onToggle();
+        setSearchTerm("");
+      }
+    },
+    (x, y) => x < 300 && y < 80
+  );
 
   //Focus on input when start menu is shown
   useEffect(() => {
@@ -64,8 +72,12 @@ function Start({ isOpened, onToggle }: StartProps) {
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       className={cn(
-        "text-primary-accent shadow-2xl shadow-stone-900 bg-dark-highlight w-[410px] overflow-auto absolute left-[50px] h-[460px] rounded-lg top-[10px]",
-        isOpened ? "block" : "hidden"
+        "absolute left-[50px] top-[10px] w-[410px] h-[460px] rounded-lg overflow-auto",
+        "bg-dark-highlight text-primary-accent shadow-2xl shadow-stone-900",
+        "origin-top-left transition-all duration-200 ease-in",
+        isOpened
+          ? "opacity-100 scale-100 translate-x-0 translate-y-0"
+          : "opacity-0 scale-0 -translate-x-2 -translate-y-2 pointer-events-none"
       )}
     >
       <div className="grid grid-cols-12 ">

@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { SkipBackIcon as Backspace } from "lucide-react";
 import { cn } from "../../lib/utils";
-import { useWindowStateMachine } from "../../hooks/useWindowState";
-import AppWindow from "../window/window";
 import { WindowContext } from "../../context/window-context";
 
 export default function Calculator() {
   const [display, setDisplay] = useState("0");
 
   const appContext = React.useContext(WindowContext);
-    if (!appContext) return null;
-  const calculatorContext = appContext?.allWindowConfig!["calculator"];
+  if (!appContext) return null;
+  const calculatorContext = appContext?.windowConfig!["calculator"];
   if (!calculatorContext) return null;
   const handleButtonClick = (value: string) => {
     setDisplay((prev) => {
@@ -22,10 +20,6 @@ export default function Calculator() {
     });
   };
 
-  const { currentState, transition } = useWindowStateMachine(
-      "OPEN",
-      "calculator"
-    );
   // const handleClear = () => {
   //   setDisplay("0");
   // };
@@ -53,12 +47,6 @@ export default function Calculator() {
   const btnClass =
     "bg-[#1e2a2a] text-primary-accent w-[55px] h-[36px] rounded-md flex justify-center items-center";
   return (
-    <AppWindow
-      defaultState={currentState}
-      {...calculatorContext}
-      transitionTo={transition}
-    >
-  
     <div className="flex justify-center items-center bg-dark-highlight">
       <div className="w-full max-w-xs">
         <div className="bg-dark-base pt-20 p-4 rounded-lg">
@@ -169,6 +157,5 @@ export default function Calculator() {
         </div>
       </div>
     </div>
-    </AppWindow>
   );
 }

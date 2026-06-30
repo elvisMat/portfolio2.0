@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  font-family: 'Nunito Variable', sans-serif;
+  font-family: "Nunito Variable", sans-serif;
 }
 @layer base {
   :root {
@@ -31,9 +31,23 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --dark-base:#171D20;
-    --dark-highlight:#1E2529;
-    --highlight:#BDE6FB
+    --highlight: #bde6fb;
+    /* Blue Base */
+    --dark-base: #171d20;
+    --dark-highlight: #1e2529;
+    --blue-accent: #bde6fb;
+    /* Purple Accent */
+    --purple-accent: #d4b3ff;
+    --purple-dark-base: #121212;
+    --purple-dark-highlight: #1e1e1e;
+    /* Pink Accent */
+    --pink-accent: #ffcaccfb;
+    --pink-dark-base: #121212;
+    --pink-dark-highlight: #1e1e1e;
+    /* Green Accent */
+    --green-accent: #b3ffdc;
+    --green-dark-base: #121212;
+    --green-dark-highlight: #1e1e1e;
   }
   .dark {
     --background: 224 71.4% 4.1%;
@@ -70,6 +84,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
-.glass{
-  @apply bg-black/40 backdrop-blur-md border border-white/10
+.glass {
+  @apply bg-black/40 backdrop-blur-md border border-white/10;
 }

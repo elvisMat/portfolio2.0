@@ -1,48 +1,24 @@
 import React from "react";
 import { TaskbarItemProps } from "../../interfaces/taskbar";
-import {  WindowContext } from "../../context/window-context";
+import { useWindowContext } from "@/hooks/useWindowContext";
+import { useThemeColors } from "@/hooks/useColorScheme";
 
 function TaskbarItem({ image, windowId }: TaskbarItemProps) {
-  const appContext = React.useContext(WindowContext);
+  const { allWindowConfig,activateWindow } = useWindowContext();
 
-  const app = appContext?.allWindowConfig![windowId];
-  if (!app) {
-    throw new Error("App not found in context");
-  }
+  const {hoveredAccent,}=useThemeColors()
+  const app = allWindowConfig![windowId];
+
   function _onLaunch() {
-    // let newAppConfig = appContext?.windowConfig;
-    // let app = appContext?.allWindowConfig.find((app) => app.title === title);
-    // if (newAppConfig) {
-    //   const activeAppIndex = newAppConfig.findIndex(
-    //     (app) => app.title === title
-    //   );
-    //   if (activeAppIndex != -1) {
-    //     let activeApp = appContext?.windowConfig[activeAppIndex];
-    //     if (!activeApp?.isActive) {
-    //       activeApp = { ...activeApp!, isActive: true, hidden: false };
-    //     }
-    //     newAppConfig[activeAppIndex] = activeApp;
-    //     appContext?.setWindowConfig(newAppConfig);
-    //   } else {
-    //     if (app) {
-    //       app = { ...app, isActive: true, zIndex: 41, hidden: false };
-    //       let inactiveApps: IWindow[] = newAppConfig.map((el) => {
-    //         return { ...el, isActive: false, zIndex: 40 };
-    //       });
-    //       inactiveApps.push(app);
-    //       appContext?.setWindowConfig(inactiveApps);
-    //     }
-    //   }
-    //   onToggle();
-    // }
+    activateWindow(windowId);
   }
   return (
     <div
       onClick={() => _onLaunch()}
-      className="flex gap-2 items-center cursor-pointer hover:bg-highlight hover:text-dark-base p-2"
+      className={`flex gap-2 items-center cursor-pointer ${hoveredAccent} hover:text-dark-base p-2`}
     >
       <img src={image} className="w-[13%]" alt={`Image of ${app.title}`} />
-      <div className="">{app.title}</div>
+      <div className="">{app.title} </div>
     </div>
   );
 }

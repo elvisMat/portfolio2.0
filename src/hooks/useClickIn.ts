@@ -1,3 +1,4 @@
+// this hook is used to detect clicks inside a specific element.
 import { useEffect, useRef } from "react";
 
 type AnyEvent = MouseEvent | TouchEvent;

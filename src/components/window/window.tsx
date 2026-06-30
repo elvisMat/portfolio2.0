@@ -6,6 +6,7 @@ import MinimiseButton from "./minimise-button";
 import { cn } from "../../lib/utils";
 import { IWindow, WindowContext } from "../../context/window-context";
 import { useClickIn } from "../../hooks/useClickIn";
+import { useWindowContext } from "@/hooks/useWindowContext";
 // 412B22
 // 32211A
 function Window({
@@ -17,27 +18,27 @@ function Window({
   yOffset = 70,
   zIndex = 40,
   title,
-  defaultState,
+  center = false,
+  isMaximisable = true,
   ...rest
 }: IWindow) {
-  const [styles, setStyles] = React.useState({
-    width: `${width}px`,
-    height: `${height}px`,
-    top: `${yOffset}px`,
-    left: `${xOffset}px`,
+  const styles = {
+    width: typeof width === "string" ? width : `${width}px`,
+    height: typeof height === "string" ? height : `${height}px`,
+    top: typeof yOffset === "string" ? yOffset : `${yOffset}px`,
+    left: typeof xOffset === "string" ? xOffset : `${xOffset}px`,
     zIndex: zIndex,
-  });
-
+  };
   const [isDragging, setIsDragging] = React.useState(false);
   // const moveOffset = React.useRef({ x: 0.1, y: 0.1 });
   const appContext = React.useContext(WindowContext);
-
   const ref = useClickIn(() => {
     if (appContext) {
       _setWindowActive();
     }
   });
 
+  const { minimizeWindow, maximizeWindow } = useWindowContext();
   const _setWindowActive = () => {};
   function _onMouseDown(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.preventDefault();
@@ -45,12 +46,6 @@ function Window({
     console.log("mouse down");
     setIsDragging(true);
   }
-  // function _onMouseLeave(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   setIsDragging(false);
-  //   console.log("mouse leave");
-  // }
   function _onMouseUp(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.preventDefault();
     e.stopPropagation();
@@ -64,23 +59,23 @@ function Window({
     // const x = e.clientX - moveOffset.current.x;
     // const y = e.clientY - moveOffset.current.y;
   }
-
   function _onClose() {
-    rest.transitionTo("CLOSED");
+    console.log("close window");
   }
-  function _onMinimise() {
-    rest.transitionTo("MINIMIZED");
-    setStyles((prev) => ({ ...prev, zIndex: 0, opacity: 0 }));
+
+  if (!rest.appId) {
+    throw new Error("Window must have an appId");
   }
 
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
-      style={{ ...styles, ...rest }}
       hidden={rest.hidden}
+      style={{ ...styles, ...rest }}
       className={cn(
-        " border border-stone-700  rounded-2xl  bg-dark-highlight  absolute text-primary-accent",
-        className
+        " border border-stone-700 animate-all rounded-2xl  bg-dark-highlight  absolute text-primary-accent",
+        className,
+        center ? "translate-x-[-50%] translate-y-[-50%]" : "" // center the window if center is true
       )}
     >
       <div className="flex justify-between items-center ml-2">
@@ -94,8 +89,10 @@ function Window({
         </div>
         <div className=" m-2 flex gap-2 items-center mr-3 justify-end">
           <MenuButton />
-          <MinimiseButton onClick={_onMinimise} />
-          <ExpandButton />
+          <MinimiseButton onClick={() => minimizeWindow(rest.appId!)} />
+          {isMaximisable && (
+            <ExpandButton onClick={() => maximizeWindow(rest.appId!)} />
+          )}
           <CloseButton onClick={_onClose} />
         </div>
       </div>

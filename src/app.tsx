@@ -1,4 +1,4 @@
-import  {
+import {
   ReactNode,
   // useContext,
   useMemo,
@@ -34,14 +34,53 @@ function App({ children }: { children?: ReactNode }) {
   const minimizeWindow = (windowId: WindowIds) => {
     if (!windowConfig) return;
     let newConfig: AppConfigType = { ...windowConfig };
-    newConfig[windowId] = { ...newConfig[windowId], hidden: true,isActive:false };
-  
+    newConfig[windowId] = {
+      ...newConfig[windowId],
+      hidden: true,
+      isActive: false,
+    };
+
     setWindowConfig(newConfig);
   };
   const activateWindow = (windowId: WindowIds) => {
     if (!windowConfig) return;
     let newConfig: AppConfigType = { ...windowConfig };
-    newConfig[windowId] = { ...newConfig[windowId], isActive: true,hidden:false,opacity:1,zIndex:41 };
+    newConfig[windowId] = {
+      ...newConfig[windowId],
+      isActive: true,
+      hidden: false,
+      opacity: 1,
+      zIndex: 41,
+    };
+    setWindowConfig(newConfig);
+  };
+  const openWindow = (windowId: WindowIds) => {
+    if (!windowConfig) return;
+    let newConfig: AppConfigType = { ...windowConfig };
+    newConfig[windowId] = {
+      ...newConfig[windowId],
+      isActive: true,
+      hidden: false,
+      opacity: 1,
+      zIndex: 41,
+    };
+    setWindowConfig(newConfig);
+  };
+  const maximizeWindow = (windowId: WindowIds) => {
+    if (!windowConfig) return;
+    let newConfig: AppConfigType = { ...windowConfig };
+    
+    newConfig[windowId] = {
+      ...newConfig[windowId],
+      isActive: true,
+      hidden: false,
+      opacity: 1,
+      zIndex: 41,
+      width: "calc(100%-60px)",
+      height: "100%",
+      top: 35,
+      left: 55,
+    };
     setWindowConfig(newConfig);
   };
 
@@ -54,11 +93,10 @@ function App({ children }: { children?: ReactNode }) {
         closeWindow,
         minimizeWindow,
         activateWindow,
-        //maximizeWindow: (windowId: WindowIds) => {},
+        openWindow,
+        maximizeWindow,
         // windowZIndexCounter,
         // setWindowZIndexCounter,
-
-        
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 // import React from "react";
-import { Chrome, Calculator, FileManager } from "../taskbar/images";
+import { Chrome, Calculator, FileManager,Cog } from "../taskbar/images";
 import HomeItem from "./home-item";
 
 function Home() {
@@ -9,6 +9,7 @@ function Home() {
         <HomeItem image={FileManager} windowId="about-me" />
         <HomeItem image={Chrome} windowId="chrome" />
         <HomeItem image={Calculator} windowId="calculator" />
+        <HomeItem image={Cog} windowId="settings" />
       </div>
     </div>
   );

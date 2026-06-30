@@ -12,9 +12,6 @@ import Resume from "./about-me/resume";
 import ExperienceSection from "./about-me/experience";
 import EducationSection from "./about-me/education";
 import { WindowContext } from "../../context/window-context";
-import Window from "../../components/window/window";
-import { useWindowStateMachine } from "../../hooks/useWindowState";
-
 export default function AboutMe() {
   const [section, setSection] = React.useState<
     "main" | "resume" | "experience" | "education" | "projects" | "skills"
@@ -23,7 +20,7 @@ export default function AboutMe() {
   const appContext = React.useContext(WindowContext);
   if (!appContext) return null;
 
-  const aboutMeContext = appContext?.allWindowConfig!["about-me"];
+  const aboutMeContext = appContext?.windowConfig!["about-me"];
   if (!aboutMeContext) return null;
   const getSections = React.useMemo(() => {
     switch (section) {
@@ -39,56 +36,45 @@ export default function AboutMe() {
         return null;
     }
   }, [section]);
-
-  const { currentState, transition } = useWindowStateMachine(
-    "OPEN",
-    "about-me"
-  );
   return (
-    <Window
-      defaultState={currentState}
-      {...aboutMeContext}
-      transitionTo={transition}
-    >
-      <div className=" bg-dark-base text-white flex">
-        <aside className="min-w-64 bg p-2 space-y-2 border-r-2  border-dark-highlight">
-          <nav className=" text-sm space-y-1">
-            <NavLink
-              onClick={() => setSection("main")}
-              isActive={section === "main"}
-              icon={<UserIcon size={"18"} />}
-              title="About Me"
-            />
-            <NavLink
-              isActive={section === "resume"}
-              onClick={() => setSection("resume")}
-              icon={<FileChartColumn size={"18"} />}
-              title="Resume"
-            />
-            <NavLink
-              isActive={section === "experience"}
-              onClick={() => setSection("experience")}
-              icon={<WorkflowIcon size={"18"} />}
-              title="Experience"
-            />
-            <NavLink
-              isActive={section === "education"}
-              onClick={() => setSection("education")}
-              icon={<BookCopy size={"18"} />}
-              title="Education"
-            />
+    <div className=" bg-dark-base text-white flex">
+      <aside className="min-w-64 bg p-2 space-y-2 border-r-2  border-dark-highlight">
+        <nav className=" text-sm space-y-1">
+          <NavLink
+            onClick={() => setSection("main")}
+            isActive={section === "main"}
+            icon={<UserIcon size={"18"} />}
+            title="About Me"
+          />
+          <NavLink
+            isActive={section === "resume"}
+            onClick={() => setSection("resume")}
+            icon={<FileChartColumn size={"18"} />}
+            title="Resume"
+          />
+          <NavLink
+            isActive={section === "experience"}
+            onClick={() => setSection("experience")}
+            icon={<WorkflowIcon size={"18"} />}
+            title="Experience"
+          />
+          <NavLink
+            isActive={section === "education"}
+            onClick={() => setSection("education")}
+            icon={<BookCopy size={"18"} />}
+            title="Education"
+          />
 
-            <NavLink
-              isActive={section === "projects"}
-              onClick={() => setSection("projects")}
-              icon={<Gamepad2Icon size={"18"} />}
-              title="Projects"
-            />
-          </nav>
-        </aside>
+          <NavLink
+            isActive={section === "projects"}
+            onClick={() => setSection("projects")}
+            icon={<Gamepad2Icon size={"18"} />}
+            title="Projects"
+          />
+        </nav>
+      </aside>
 
-        {getSections}
-      </div>
-    </Window>
+      {getSections}
+    </div>
   );
 }

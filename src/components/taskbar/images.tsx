@@ -7,4 +7,5 @@ import Youtube from '../../assets/youtube.png'
 import Spotify from '../../assets/spotity.png'
 import Terminal from '../../assets/terminal.png'
 import Trash from '../../assets/trash-can.png'
-export { VSCode, Chrome, Calculator, FileManager, CogWheel, Spotify, Youtube, Terminal, Trash }
+import Cog from '../../assets/cog.png'
+export { VSCode, Chrome, Calculator, FileManager, CogWheel, Spotify, Youtube, Terminal, Trash, Cog }

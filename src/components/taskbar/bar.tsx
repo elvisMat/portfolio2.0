@@ -18,6 +18,7 @@ function Bar({ className }: BarProps) {
         <div role="button" onClick={() => onToggle()} className="">
           <BiSolidGrid className="text-white " size={30} />
         </div>
+        {String(isOpen)}
         <div className="flex flex-col gap-4 mt-4">
           {appContextArray?.map((el) => (
             <TabItem

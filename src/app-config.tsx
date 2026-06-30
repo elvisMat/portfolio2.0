@@ -4,9 +4,11 @@ import {
   Calculator as CalculatorImage,
   Chrome as ChromeIcon,
   FileManager as FileManagerIcon,
+  Cog as SettingsIcon,
 } from "./components/taskbar/images";
 import Calculator from "./components/apps/calculator";
 import AboutMe from "./components/apps/about-me";
+import Settings from "./components/apps/settings";
 export type AppConfigType =
   | {
       [key in WindowIds]: IWindow;
@@ -28,7 +30,6 @@ export const AppConfig: AppConfigType = {
     ),
     isActive: true,
     icon: ChromeIcon,
-    transitionTo: () => {},
   },
   calculator: {
     title: "Calculator",
@@ -40,7 +41,6 @@ export const AppConfig: AppConfigType = {
     children: <Calculator />,
     isActive: true,
     icon: CalculatorImage,
-    transitionTo: () => {},
   },
   "about-me": {
     title: "About Me",
@@ -52,8 +52,20 @@ export const AppConfig: AppConfigType = {
     children: <AboutMe />,
     isActive: true,
     icon: FileManagerIcon,
-    transitionTo: () => {},
   },
+  settings: {
+    title: "Settings",
+    xOffset: '50%',
+    yOffset: '50%',
+    zIndex: 40,
+    width: 900,
+    height: 635,
+    children: <Settings />,
+    isActive: true,
+    isMaximisable: false,
+    icon: SettingsIcon,
+    center: true,
+  }
 };
 export function searchKeysByTitle(title: string): string[] {
   if (AppConfig === null) return [];

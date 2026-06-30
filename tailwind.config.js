@@ -12,8 +12,22 @@ export default {
       },
       colors: {
         background: "hsl(var(--background))",
+        // Blue Color
         "dark-base": "var(--dark-base)",
         "dark-highlight": "var(--dark-highlight)",
+        "blue-accent": "var(--blue-accent)",
+        // Purple Color
+        "purple-accent": "var(--purple-accent)",
+        "purple-dark-base": "var(--purple-dark-base)",
+        "purple-dark-highlight": "var(--purple-dark-highlight)",
+        // Pink Color
+        "pink-accent": "var(--pink-accent)",
+        "pink-dark-base": "var(--pink-dark-base)",
+        "pink-dark-highlight": "var(--pink-dark-highlight)",
+        // Green Color
+        "green-accent": "var(--green-accent)",
+        "green-dark-base": "var(--green-dark-base)",
+        "green-dark-highlight": "var(--green-dark-highlight)",
         "primary-accent": "#BDE6FB",
         foreground: "hsl(var(--foreground))",
         highlight: "var(--highlight)",
