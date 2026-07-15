@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import Bar from "../components/taskbar/bar";
 import bg from "../assets/bg.jpeg";
 import Desktop from "../components/home/home";
 import { WindowContext } from "../context/window-context";
-import { TopBar } from "../components/top-bar/container";
+// import { TopBar } from "../components/top-bar/container";
 import AppWindow from "@/components/window/window";
 function Home() {
-  const appContext = useContext(WindowContext);
+  const appContext = React.useContext(WindowContext);
   const appContextArray = Object.values(appContext?.windowConfig || {});
   return (
     <div className="w-[100vw] overflow-hidden h-[100vh] bg-dark-base relative">

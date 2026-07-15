@@ -16,6 +16,8 @@ export interface IWindow extends CSSProperties {
   icon?: string;
   appId?: WindowIds;
   isMaximisable?: boolean;
+  isMaximized?: boolean;
+
   center?: boolean; // controls whether the window is initially open at the center
 }
 export interface IWindowContext {
@@ -26,6 +28,9 @@ export interface IWindowContext {
   minimizeWindow: (windowId: WindowIds) => void;
   maximizeWindow: (windowId: WindowIds) => void;
   activateWindow: (windowId: WindowIds) => void;
+  restoreWindow: (windowId: WindowIds) => void;
   openWindow: (windowId: WindowIds) => void;
+  windowZIndexCounter: number;
+  setWindowZIndexCounter: (counter: number) => void;
 }
 export const WindowContext = createContext<IWindowContext | null>(null);

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ItemProps, StartProps } from "../../interfaces/taskbar";
 import TaskbarItem from "./taskbar-item";
 import { cn } from "../../lib/utils";
-import { Calculator, Chrome, FileManager } from "./images";
+import { Calculator, Chrome, FileManager,Cog } from "./images";
 import { Input } from "../ui/IconInput";
 import useDebounce from "../../hooks/useDebouncedValue";
 import { useClickAway } from "../../hooks/useClickAway";
@@ -15,6 +15,7 @@ const taskbarItems: ItemProps[] = [
   { image: Calculator, windowId: "calculator" },
   { image: FileManager, windowId: "about-me" },
   { image: Chrome, windowId: "chrome" },
+  { image: Cog, windowId: "settings" },
   // { image: VSCode, windowId: "vs-code" },
   // { image: Youtube, windowId: "youtube" },
   // { image: Spotify, windowId: "spotify" },
@@ -28,7 +29,6 @@ function Start({ isOpened, onToggle }: StartProps) {
   const ref = useClickAway(
     () => {
       if (isOpened) {
-        console.log("click away");
         onToggle();
         setSearchTerm("");
       }

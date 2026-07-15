@@ -1,5 +1,5 @@
 import UrlBar from "./chrome/url-bar";
-import Window from "../../components/window/window";
+// import Window from "../../components/window/window";
 import { WindowContext } from "../../context/window-context";
 import React from "react";
 interface Props {
@@ -21,7 +21,7 @@ function Chrome({ url, displayUrl }: Props) {
   if (!chromeContext) return null;
 
   return (
-    <div>
+    <div className='h-full'>
       <div className="bg-dark-base">
         <UrlBar onClick={refreshURL} displayUrl={displayUrl} />
       </div>

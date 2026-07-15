@@ -7,6 +7,7 @@ import { cn } from "../../lib/utils";
 import { IWindow, WindowContext } from "../../context/window-context";
 import { useClickIn } from "../../hooks/useClickIn";
 import { useWindowContext } from "@/hooks/useWindowContext";
+import { useDispatchCustomEvent } from "@/hooks/useDispatchCustomEvent";
 // 412B22
 // 32211A
 function Window({
@@ -20,11 +21,16 @@ function Window({
   title,
   center = false,
   isMaximisable = true,
+  isMaximized = false,
   ...rest
 }: IWindow) {
   const styles = {
     width: typeof width === "string" ? width : `${width}px`,
-    height: typeof height === "string" ? height : `${height}px`,
+    height: isMaximized
+      ? "100vh"
+      : typeof height === "string"
+      ? height
+      : `${height}px`,
     top: typeof yOffset === "string" ? yOffset : `${yOffset}px`,
     left: typeof xOffset === "string" ? xOffset : `${xOffset}px`,
     zIndex: zIndex,
@@ -38,7 +44,9 @@ function Window({
     }
   });
 
-  const { minimizeWindow, maximizeWindow } = useWindowContext();
+  const { minimizeWindow, maximizeWindow, restoreWindow, closeWindow } =
+    useWindowContext();
+  const dispatchCustomEvent = useDispatchCustomEvent();
   const _setWindowActive = () => {};
   function _onMouseDown(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.preventDefault();
@@ -60,7 +68,9 @@ function Window({
     // const y = e.clientY - moveOffset.current.y;
   }
   function _onClose() {
-    console.log("close window");
+    if (rest.appId) {
+      closeWindow(rest.appId);
+    }
   }
 
   if (!rest.appId) {
@@ -70,15 +80,25 @@ function Window({
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
-      hidden={rest.hidden}
-      style={{ ...styles, ...rest }}
+      style={{
+        ...styles,
+        ...rest,
+        opacity: rest.hidden ? 0 : 1,
+        visibility: rest.hidden ? "hidden" : "visible",
+      }}
       className={cn(
-        " border border-stone-700 animate-all rounded-2xl  bg-dark-highlight  absolute text-primary-accent",
-        className,
-        center ? "translate-x-[-50%] translate-y-[-50%]" : "" // center the window if center is true
+        "absolute  inset-0 border rounded-xl  border-stone-700 bg-dark-highlight text-primary-accent",
+        "origin-top-left transform-gpu",
+        "transition-all duration-300 ease-out origin-top-left",
+        rest.hidden
+          ? "opacity-0 scale-0 pointer-events-none"
+          : "opacity-100 scale-100",
+        center ? "translate-x-[-50%] translate-y-[-50%]" : "",
+        isMaximized ? "translate-x-0 translate-y-0 rounded-none" : "",
+        className
       )}
     >
-      <div className="flex justify-between items-center ml-2">
+      <div className="flex  justify-between items-center ml-2">
         <div
           onMouseDown={_onMouseDown}
           onMouseMove={_onMouseMove}
@@ -88,10 +108,25 @@ function Window({
           {title}
         </div>
         <div className=" m-2 flex gap-2 items-center mr-3 justify-end">
-          <MenuButton />
+          {rest.contextMenu && <MenuButton />}
           <MinimiseButton onClick={() => minimizeWindow(rest.appId!)} />
           {isMaximisable && (
-            <ExpandButton onClick={() => maximizeWindow(rest.appId!)} />
+            <ExpandButton
+              onClick={() => {
+                if (isMaximized) {
+                  dispatchCustomEvent("window:restore", {
+                    appId: rest.appId!,
+                  });
+                  restoreWindow(rest.appId!);
+                } else {
+                  dispatchCustomEvent("window:maximize", {
+                    appId: rest.appId!,
+                  });
+                  maximizeWindow(rest.appId!);
+                }
+              }}
+              isMaximized={isMaximized}
+            />
           )}
           <CloseButton onClick={_onClose} />
         </div>

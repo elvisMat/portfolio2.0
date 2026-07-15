@@ -1,9 +1,9 @@
-import  { useContext } from "react";
+import { useContext } from "react";
 import { HomeItemProps } from "../../interfaces/taskbar";
 import { cn } from "../../lib/utils";
 import { useIsHovered } from "../../hooks/useIsHovered";
 import { IWindow, WindowContext } from "../../context/window-context";
-import { AppConfigType } from "../../app-config";
+// import { AppConfigType } from "../../app-config";
 function HomeItem({ image, windowId }: HomeItemProps) {
   const { hovered } = useIsHovered();
   const appContext = useContext(WindowContext);
@@ -19,27 +19,9 @@ function HomeItem({ image, windowId }: HomeItemProps) {
       existingAppIndex = appContext?.windowConfig[windowId];
     }
     if (existingAppIndex) {
-      existingAppIndex = {
-        ...existingAppIndex,
-        isActive: true,
-        zIndex: 41,
-        hidden: false,
-        opacity: 1,
-      };
-      const prevConfig = appContext?.windowConfig || {};
-      const newConfig: AppConfigType = {
-        ...prevConfig,
-        [windowId]: existingAppIndex,
-      } as AppConfigType;
-
-      appContext?.setWindowConfig(newConfig);
+      appContext?.activateWindow(windowId);
     } else {
-      const prevConfig = appContext?.windowConfig || {};
-      const newConfig: AppConfigType = {
-        ...prevConfig,
-        [windowId]: {...app, appId:windowId},
-      } as AppConfigType;
-      appContext?.setWindowConfig(newConfig);
+      appContext?.openWindow(windowId);
     }
   };
   return (

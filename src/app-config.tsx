@@ -18,10 +18,9 @@ export type AppConfigType =
 export const AppConfig: AppConfigType = {
   chrome: {
     title: "Chrome",
+    appId: "chrome",
     xOffset: 65,
     yOffset: 45,
-    zIndex: 41,
-
     children: (
       <Chrome
         displayUrl="www.google.com"
@@ -33,31 +32,33 @@ export const AppConfig: AppConfigType = {
   },
   calculator: {
     title: "Calculator",
+    appId: "calculator",
     yOffset: 70,
     xOffset: 70,
-    zIndex: 40,
     width: 345,
     height: 435,
     children: <Calculator />,
     isActive: true,
     icon: CalculatorImage,
+    isMaximisable: false,
   },
   "about-me": {
     title: "About Me",
+    appId: "about-me",
     xOffset: 65,
     yOffset: 45,
-    zIndex: 40,
     width: 1000,
     height: 635,
     children: <AboutMe />,
     isActive: true,
     icon: FileManagerIcon,
+    isMaximisable: false,
   },
   settings: {
     title: "Settings",
-    xOffset: '50%',
-    yOffset: '50%',
-    zIndex: 40,
+    appId: "settings",
+    xOffset: "50%",
+    yOffset: "50%",
     width: 900,
     height: 635,
     children: <Settings />,
@@ -65,7 +66,7 @@ export const AppConfig: AppConfigType = {
     isMaximisable: false,
     icon: SettingsIcon,
     center: true,
-  }
+  },
 };
 export function searchKeysByTitle(title: string): string[] {
   if (AppConfig === null) return [];

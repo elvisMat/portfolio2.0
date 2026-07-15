@@ -11,6 +11,7 @@ export interface accentColorChangeEventDetail {
 declare global {
   interface WindowEventMap {
     "window:maximize": CustomEvent<MaximizeEventDetail>;
+    "window:restore": CustomEvent<MaximizeEventDetail>;
     "app:accentColorChange": CustomEvent<accentColorChangeEventDetail>;
   }
 }

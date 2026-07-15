@@ -3,7 +3,7 @@ import { useIsHovered } from "../../hooks/useIsHovered";
 import { WindowIds } from "../../context/window-context";
 import { useWindowContext } from "../../hooks/useWindowContext";
 import { useThemeColors } from "@/hooks/useColorScheme";
-
+// import React from "react";
 function TabItem({
   image,
   isActive,
@@ -23,7 +23,6 @@ function TabItem({
     if (isActive) return;
     appContext?.activateWindow(appId);
   };
-
   return (
     <div
       onClick={_onClick}

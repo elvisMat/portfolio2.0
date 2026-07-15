@@ -1,4 +1,4 @@
-// listes to clicks outside of the start menu and closes it is clicked outside
+// this hook is used to detect clicks outside of a specific element, inludes bounds check.
 import { useEffect, useRef } from "react";
 
 type AnyEvent = MouseEvent | TouchEvent;

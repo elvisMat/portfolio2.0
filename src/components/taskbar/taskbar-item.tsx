@@ -6,10 +6,11 @@ import { useThemeColors } from "@/hooks/useColorScheme";
 function TaskbarItem({ image, windowId }: TaskbarItemProps) {
   const { allWindowConfig,activateWindow } = useWindowContext();
 
-  const {hoveredAccent,}=useThemeColors()
+  const {hoveredAccent}=useThemeColors()
   const app = allWindowConfig![windowId];
 
   function _onLaunch() {
+  
     activateWindow(windowId);
   }
   return (
