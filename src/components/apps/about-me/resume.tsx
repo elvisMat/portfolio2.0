@@ -1,4 +1,5 @@
 // import React from "react";
+import CV from '../../../assets/cv.pdf';
 const PdfViewer = () => {
   return (
     <div className="h-full w-full m-0 p-3">
@@ -6,7 +7,7 @@ const PdfViewer = () => {
 
       <object
         className="w-full aspect-[4/3] h-full"
-        data="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
+        data={CV}
         type="application/pdf"
         width="800"
         height="500"
@@ -14,7 +15,7 @@ const PdfViewer = () => {
         <p>
           Your browser does not support PDFs.{" "}
           <a
-            href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
+            href={CV}
             className="text-blue-600 underline"
           >
             Download the PDF
