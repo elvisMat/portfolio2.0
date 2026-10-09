@@ -1,4 +1,4 @@
-import  { useContext } from "react";
+import { useContext } from "react";
 import { cn } from "../../../lib/utils";
 import { WindowContext } from "../../../context/window-context";
 
@@ -15,7 +15,7 @@ const educations: Education[] = [
     degree: "Bachelor of Science in Computer Science (CS)",
     institution: "University of Botswana (UB)",
     location: "Gaborone, Botswana",
-    date: "2016-Present",
+    date: "Expected May 2027",
   },
   // {
   //   degree: "Botswana General Certificate of Secondary Education (BGCSE)",
@@ -29,7 +29,7 @@ const EducationSection = () => {
   const appContext = useContext(WindowContext);
   const appConfig = appContext!.allWindowConfig!["about-me"];
 
-  if(!appConfig) return null;
+  if (!appConfig) return null;
   return (
     <section
       style={{ height: `${appConfig?.height}px` }}
@@ -46,7 +46,7 @@ const EducationSection = () => {
               className={cn(
                 "relative mb-12",
                 index !== educations.length - 1 &&
-                  "pb-12 border-b border-gray-700" // Add border except for the last item
+                "pb-12 border-b border-gray-700" // Add border except for the last item
               )}
             >
               {/* Circle */}
