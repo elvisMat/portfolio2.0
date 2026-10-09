@@ -15,7 +15,7 @@ const educations: Education[] = [
     degree: "Bachelor of Science in Computer Science (CS)",
     institution: "University of Botswana (UB)",
     location: "Gaborone, Botswana",
-    date: "Expected May 2027",
+    date: "Expected: May 2027",
   },
   // {
   //   degree: "Botswana General Certificate of Secondary Education (BGCSE)",
